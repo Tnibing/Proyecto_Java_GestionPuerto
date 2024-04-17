@@ -35,5 +35,6 @@ public class Main {
         nav2.addBuque(buque2);
         nav3.addBuque(buque3);
         
+        new GUI_TEST();
     }
 }

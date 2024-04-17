@@ -1,6 +1,7 @@
 package agentes;
 
 import gestionRuta.Buque;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -16,6 +17,7 @@ public class Naviera {
     
     public Naviera(String n) {
         nombre = n;
+        buques = new ArrayList<>();
     }
     
     public String getNombre() {
