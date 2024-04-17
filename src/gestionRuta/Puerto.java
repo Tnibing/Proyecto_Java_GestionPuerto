@@ -34,7 +34,6 @@ public class Puerto {
         return nombrePuerto;
     }
     
-    // TODO, hacer la clase buque para que recibir y zarpar sean interesantes
     public void pedirAtracar(Buque b) {
         StringBuilder sb = new StringBuilder();
         
