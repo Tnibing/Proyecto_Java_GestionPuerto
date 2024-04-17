@@ -11,6 +11,5 @@ public class Main {
         // TEST
         new GUI_TEST();
         
-  
     }
 }
