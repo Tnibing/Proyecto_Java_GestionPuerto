@@ -37,4 +37,11 @@ public class Puerto {
         
         sb.append("Recibiendo petición del buque ").append(b.getNombre()).append(" pidiendo permiso al puerto ").append(getNombre()).append(" para atracar.");
     }
+    
+    @Override
+    public String toString() {
+        String res = "Nombre del puerto: " + getNombre() + "\nPaís: " + getPais() +  "Nombre de carga: " + getNombreDeCarga() + "\n\n";
+        
+        return res;
+    }
 }

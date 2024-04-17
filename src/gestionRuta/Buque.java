@@ -25,6 +25,15 @@ public class Buque {
         ruta = r;
         capacidadContenedores = 1600;
         contenedores = new ArrayList<>();
+        
+        if (nombreBuque.equalsIgnoreCase("CINZIA A"))
+            puertoActual = new Puerto("Yarimca", "Turquía");
+        
+        else if (nombreBuque.equalsIgnoreCase("MAERSK NEWPORT"))
+            puertoActual = new Puerto("Valencia", "España");
+        
+        else if (nombreBuque.equalsIgnoreCase("BOMAR RESOLVE"))
+            puertoActual = new Puerto("Pireo", "Grecia");
     }
     
     public String getNombre() {
@@ -39,12 +48,14 @@ public class Buque {
         return capacidadContenedores;
     }
     
+    public List<Contenedor> getContenedores() {
+        return contenedores;
+    }
+    
     // El spread operator en el parámetro devuelve un array del mismo tipo (Contenedor[])
     // de n número de elementos
     public void addContenedor(Contenedor ... c) {
-        
         contenedores.addAll(Arrays.asList(c));
-        
     }
     
     public Puerto getPuertoActual() {
@@ -52,7 +63,7 @@ public class Buque {
     }
     
     public void llegarAPuerto(Puerto p) {
-        System.out.println("El buque " + getNombre() + " está llegando al puerto " + p.getNombre() + " ...");
+        System.out.println("El buque " + getNombre() + " está llegando al puerto " + p.getNombre() + "...");
         p.pedirAtracar(this);
         
         try {
@@ -76,16 +87,28 @@ public class Buque {
         }
     }
     
-    // El spread operator en el parámetro devuelve un array del mismo tipo (Contenedor[])
-    // de n número de elementos
+    // TO DO
     public void descargarContenedores(Contenedor ... c) {
         
     }
-    
-    // El spread operator en el parámetro devuelve un array del mismo tipo (Contenedor[])
-    // de n número de elementos
+
+    // TO DO
     public void cargarContenedores(Contenedor ... c) {
         
+    }
+    
+    @Override
+    public String toString() {
+        StringBuilder listaCont =  new StringBuilder();
         
+        contenedores.forEach(e -> listaCont.append(e).append("\n"));
+        
+        String res = "Nombre del buque: " + getNombre() + 
+                             "\nRUTA\n" + getRuta().toString() + 
+                             "\nCapacidad total de contenedores: " + getCapacidad() + 
+                             "\nPuerto actual: " + puertoActual.toString() + 
+                             "\nCONTENEDORES A BORDO\n" + listaCont.toString();
+        
+        return res;
     }
 }

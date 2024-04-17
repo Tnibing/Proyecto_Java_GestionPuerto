@@ -2,6 +2,7 @@ package agentes;
 
 import gestionCarga.Contenedor;
 import gestionRuta.Buque;
+import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -11,9 +12,7 @@ import java.util.List;
 
 public class Naviera {
     
-    private String nombre;
-    List<Contenedor> contenedoresDisponibles;
-    List<Contenedor> contenedoresEnUso;
+    final private String nombre;
     List<Buque> buques;
     
     public Naviera(String n) {
@@ -24,13 +23,19 @@ public class Naviera {
         return nombre;
     }
     
-    public void generarContenedores() {
+    public void addBuque(Buque ... b) {
+        buques.addAll(Arrays.asList(b));
+    }
+    
+    @Override
+    public String toString() {
+        StringBuilder sb = new StringBuilder();
         
-        int i = 0;
-        Contenedor c;
+        buques.forEach(e -> sb.append(e.toString()));
         
-        while (i < 15000) {
-            
-        }
+        String res = "Nombre de la naviera: " + getNombre() +
+                             "\nBuques de la naviera\n" + sb.toString();
+        
+        return res;
     }
 }
