@@ -1,6 +1,5 @@
 package agentes;
 
-import gestionCarga.Contenedor;
 import gestionRuta.Buque;
 import java.util.Arrays;
 import java.util.List;
