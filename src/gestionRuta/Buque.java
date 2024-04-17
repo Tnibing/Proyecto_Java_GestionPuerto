@@ -2,6 +2,7 @@ package gestionRuta;
 
 import gestionCarga.Contenedor;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -16,7 +17,6 @@ public class Buque {
     private String nombreBuque;
     private Ruta ruta;
     private int capacidadContenedores;
-    private int contenedoresCargados;
     private List<Contenedor> contenedores;
     private Puerto puertoActual;
     
@@ -24,7 +24,6 @@ public class Buque {
         nombreBuque = n;
         ruta = r;
         capacidadContenedores = 1600;
-        contenedoresCargados = 0;
         contenedores = new ArrayList<>();
     }
     
@@ -40,12 +39,11 @@ public class Buque {
         return capacidadContenedores;
     }
     
+    // El spread operator en el parámetro devuelve un array del mismo tipo (Contenedor[])
+    // de n número de elementos
     public void addContenedor(Contenedor ... c) {
         
-        for (Contenedor x : c) {
-            contenedores.add(x);
-            contenedoresCargados++;
-        }
+        contenedores.addAll(Arrays.asList(c));
         
     }
     
@@ -70,15 +68,24 @@ public class Buque {
             Logger.getLogger(Buque.class.getName()).log(Level.SEVERE, null, ex);
             
         } finally {
-            System.out.println("Buque asegurado, listo para carga/descarga de contenedores.");
+            System.out.println("Buque " + getNombre() + " asegurado, listo para carga/descarga de contenedores.");
+            
+            puertoActual = p;
+            
+            System.out.println("Puerto actual: " + puertoActual.getNombre());
         }
     }
     
+    // El spread operator en el parámetro devuelve un array del mismo tipo (Contenedor[])
+    // de n número de elementos
     public void descargarContenedores(Contenedor ... c) {
         
     }
     
+    // El spread operator en el parámetro devuelve un array del mismo tipo (Contenedor[])
+    // de n número de elementos
     public void cargarContenedores(Contenedor ... c) {
+        
         
     }
 }
