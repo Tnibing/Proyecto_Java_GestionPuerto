@@ -1,7 +1,6 @@
-package gestionCarga;
+package gestionRuta;
 
-import gestionRuta.Puerto;
-import gestionRuta.Ruta;
+import gestionCarga.Contenedor;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
@@ -75,7 +74,11 @@ public class Buque {
         }
     }
     
-    public void descargarContenedores() {
+    public void descargarContenedores(Contenedor ... c) {
+        
+    }
+    
+    public void cargarContenedores(Contenedor ... c) {
         
     }
 }

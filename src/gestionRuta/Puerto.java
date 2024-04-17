@@ -1,7 +1,5 @@
 package gestionRuta;
 
-import gestionCarga.Buque;
-
 /**
  *
  * @author Fran <6W>
