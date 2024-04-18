@@ -37,6 +37,5 @@ public class Main {
         
         new GUI_TEST();
         
-        // Este comentario es para probar un pull request
     }
 }

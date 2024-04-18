@@ -25,6 +25,7 @@ public class GUI_TEST extends JFrame implements ActionListener {
     private JTextArea info;
     private JPanel texto;
     private JPanel ladoIzquierdo;
+    private JPanel centro;
     
     public GUI_TEST() {
         
@@ -34,6 +35,10 @@ public class GUI_TEST extends JFrame implements ActionListener {
         this.setLayout(new BorderLayout());
         
         boton = new JButton("Aceptar");
+        
+        centro = new JPanel();
+        centro.setBackground(new Color(0x649EFF));
+        centro.add(boton);
         
         texto = new JPanel();
         texto.setPreferredSize(new Dimension(65, 65));
@@ -57,13 +62,13 @@ public class GUI_TEST extends JFrame implements ActionListener {
         String[] puertos = {"Valencia (España)", "Castellón (España)", "Barcelona (España)", "Pireo (Grecia)", "Estambul (Turquía)", "Yarimca (Turquía)"};
         listaPuertos = new JComboBox(puertos);
         
-        
         ladoIzquierdo.setBackground(Color.WHITE);
         ladoIzquierdo.add(listaPuertos);
         ladoIzquierdo.add(listaNavieras);
 
         this.add(texto, BorderLayout.CENTER);
         this.add(ladoIzquierdo, BorderLayout.WEST);
+        this.add(centro, BorderLayout.CENTER);
         this.setSize(1400, 800);
         this.setLocationRelativeTo(null);
         this.setVisible(true);
