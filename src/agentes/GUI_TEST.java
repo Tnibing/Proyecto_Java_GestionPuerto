@@ -24,6 +24,7 @@ public class GUI_TEST extends JFrame implements ActionListener {
     private JButton boton;
     private JTextArea info;
     private JPanel texto;
+    private JPanel ladoIzquierdo;
     
     public GUI_TEST() {
         
@@ -38,6 +39,8 @@ public class GUI_TEST extends JFrame implements ActionListener {
         texto.setPreferredSize(new Dimension(65, 65));
         texto.setBackground(new Color(0x649EFF));
         
+        ladoIzquierdo = new JPanel();
+        
         info = new JTextArea("HOLA");
         info.setEditable(false);
         info.setBackground(Color.red);
@@ -47,17 +50,20 @@ public class GUI_TEST extends JFrame implements ActionListener {
         ImageIcon icono = new ImageIcon("buqueIcono.png");
         this.setIconImage(icono.getImage());
         
-        /*
+        
         String[] navieras = {"Arkas", "Maersk", "CMA"};
         listaNavieras = new JComboBox(navieras);
         
         String[] puertos = {"Valencia (España)", "Castellón (España)", "Barcelona (España)", "Pireo (Grecia)", "Estambul (Turquía)", "Yarimca (Turquía)"};
         listaPuertos = new JComboBox(puertos);
-        */
         
+        
+        ladoIzquierdo.setBackground(Color.WHITE);
+        ladoIzquierdo.add(listaPuertos);
+        ladoIzquierdo.add(listaNavieras);
+
         this.add(texto, BorderLayout.CENTER);
-        //this.add(listaNavieras, BorderLayout.NORTH);
-        //this.add(listaPuertos);
+        this.add(ladoIzquierdo, BorderLayout.WEST);
         this.setSize(1400, 800);
         this.setLocationRelativeTo(null);
         this.setVisible(true);
