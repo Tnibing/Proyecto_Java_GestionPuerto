@@ -1,7 +1,5 @@
 package gui;
 
-import gestionRuta.Buque;
-import gestionRuta.Ruta;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
@@ -18,6 +16,7 @@ import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import javax.swing.SwingUtilities;
 
@@ -60,6 +59,8 @@ public class GUI_TEST extends JFrame implements ActionListener {
     // Texto PANEL CENTRO.
     private JTextArea rutaBuques;
     private JTextArea infoPuertosTexto;
+    private JScrollPane scrollTextoBuques;
+    private JScrollPane scrollTextoPuertos;
     
     // JLabel para imágenes PANEL CENTRO.
     private JLabel contenedorImagenCentroBuque;
@@ -284,7 +285,12 @@ public class GUI_TEST extends JFrame implements ActionListener {
         rutaBuques.setForeground(Color.BLACK);
         rutaBuques.setOpaque(true);
         rutaBuques.setMargin(new Insets(10, 10, 10, 10));
-
+        rutaBuques.setEditable(false);
+        
+        // Barra de scroll para rutaBuques.
+        scrollTextoBuques = new JScrollPane(rutaBuques);
+        scrollTextoBuques.setPreferredSize(new Dimension(700, 300));
+        
         // (JButton) iniciar ruta.
         comenzarBuques = new JButton("Iniciar ruta");
         comenzarBuques.addActionListener(this);
@@ -301,6 +307,10 @@ public class GUI_TEST extends JFrame implements ActionListener {
         infoPuertosTexto.setForeground(Color.BLACK);
         infoPuertosTexto.setOpaque(true);
         infoPuertosTexto.setMargin(new Insets(10, 10, 10, 10));
+
+        // Barra de scroll para puertos.
+        scrollTextoPuertos = new JScrollPane(infoPuertosTexto);
+        scrollTextoPuertos.setPreferredSize(new Dimension(700, 300));
         
         // Imagen, primero se carga como ImageIcon y luego lo paso a
         // Image para poder cambiar el tamaño
@@ -399,18 +409,18 @@ public class GUI_TEST extends JFrame implements ActionListener {
         
         // Adición de componentes al panel de centro-abajo
         panelComponenetesInternoCentroAbajo.add(contenedorImagenCentroPuerto, constraintsImagenPuerto);
-        panelComponenetesInternoCentroAbajo.add(infoPuertosTexto, constraintsInfoPuertosTexto);
+        panelComponenetesInternoCentroAbajo.add(scrollTextoPuertos, constraintsInfoPuertosTexto);
         panelComponenetesInternoCentroAbajo.add(infoPuertosBoton, constraintsInfoPuertosBoton);
         
         // Adición de componentes al panel de centro-arriba
-        panelComponenetesInternoCentroArriba.add(rutaBuques, constraintsRutaBuques);
+        panelComponenetesInternoCentroArriba.add(scrollTextoBuques, constraintsRutaBuques);
         panelComponenetesInternoCentroArriba.add(contenedorImagenCentroBuque, constraintsImagenBuque);
         panelComponenetesInternoCentroArriba.add(comenzarBuques, constraintsBotonComenzar);
         panelComponenetesInternoCentroArriba.add(pararBuques, constraintsBotonParar);
         
         panelComponenetesInternoCentroArriba.setVisible(true);
         
-    // Se añade el panel de componentes al del centro
+        // Se añade el panel de componentes al del centro
         ladoCentro.add(panelComponenetesInternoCentroAbajo, BorderLayout.SOUTH);
         ladoCentro.add(panelComponenetesInternoCentroArriba, BorderLayout.NORTH);
         
@@ -441,13 +451,12 @@ public class GUI_TEST extends JFrame implements ActionListener {
         if (e.getSource() == comenzarBuques) {
             
             SwingUtilities.invokeLater(new Runnable() {
-            
+                
                 @Override
                 public void run() {
-                    Ruta rutaMediterraneo = new Ruta("Ruta de comercio Mediterránea.");
-                    rutaBuques.append(new Buque("CINZIA A", rutaMediterraneo).toString());
+                    rutaBuques.append("Test\n");
                 }
-        });
+            });
         }
     }
     
