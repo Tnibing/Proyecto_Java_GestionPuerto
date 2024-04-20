@@ -204,7 +204,7 @@ public class GUI_TEST extends JFrame implements ActionListener {
         // arriba a la izquierda.
         this.setLocationRelativeTo(null);
         
-        // Sin esto, no se vería el JFrame al comenzar la aplicación
+        // Sin esto, no se vería el JFrame al comenzar la aplicación.
         this.setVisible(true);
     }
 
