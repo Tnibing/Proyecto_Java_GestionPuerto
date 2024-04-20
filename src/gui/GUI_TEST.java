@@ -1,5 +1,7 @@
 package gui;
 
+import gestionRuta.Buque;
+import gestionRuta.Ruta;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
@@ -17,6 +19,7 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextArea;
+import javax.swing.SwingUtilities;
 
 /**
  *
@@ -147,7 +150,7 @@ public class GUI_TEST extends JFrame implements ActionListener {
         seleccionPuertoOrigen.setText("Puerto de origen:");
         seleccionPuertoOrigen.setForeground(Color.WHITE);
 
-        // (JLabel) 0xC2C6CE
+        // (JLabel)
         seleccionPuertoDestino = new JLabel();
         seleccionPuertoDestino.setText("Puerto de destino:");
         seleccionPuertoDestino.setForeground(Color.WHITE);
@@ -270,33 +273,34 @@ public class GUI_TEST extends JFrame implements ActionListener {
         panelComponenetesInternoCentroArriba.setLayout(new GridBagLayout());
         panelComponenetesInternoCentroArriba.setOpaque(false);
         
-        // (JButton) iniciar ruta.
-        comenzarBuques = new JButton("Iniciar ruta");
-        
-        // (JButton) parar ruta.
-        pararBuques = new JButton("Parar ruta");
-        pararBuques.setPreferredSize(comenzarBuques.getPreferredSize());
-        
         // (JButton) info puertos.
         infoPuertosBoton = new JButton("Mostrar información de puertos");
         
         // (JTextArea) Buques.
-        rutaBuques = new JTextArea(1, 10);
-        rutaBuques.setEditable(false);
+        rutaBuques = new JTextArea(10, 1);
+        rutaBuques.setEditable(true);
         rutaBuques.setPreferredSize(new Dimension(700, 300));
         rutaBuques.setBackground(new Color(0xC0D0EF));
-        rutaBuques.setForeground(new Color(0x0F1C30));
-        rutaBuques.setBorder(new BordeRedondo(20));
-        rutaBuques.setOpaque(false);
+        rutaBuques.setForeground(Color.BLACK);
+        rutaBuques.setOpaque(true);
+        rutaBuques.setMargin(new Insets(10, 10, 10, 10));
+
+        // (JButton) iniciar ruta.
+        comenzarBuques = new JButton("Iniciar ruta");
+        comenzarBuques.addActionListener(this);
+
+        // (JButton) parar ruta.
+        pararBuques = new JButton("Parar ruta");
+        pararBuques.setPreferredSize(comenzarBuques.getPreferredSize());
         
         // (JTextArea) Puertos.
         infoPuertosTexto = new JTextArea(1, 10);
         infoPuertosTexto.setEditable(false);
         infoPuertosTexto.setPreferredSize(new Dimension(700, 300));
         infoPuertosTexto.setBackground(new Color(0xC0D0EF));
-        infoPuertosTexto.setForeground(new Color(0x0F1C30));
-        infoPuertosTexto.setBorder(new BordeRedondo(20));
-        infoPuertosTexto.setOpaque(false);
+        infoPuertosTexto.setForeground(Color.BLACK);
+        infoPuertosTexto.setOpaque(true);
+        infoPuertosTexto.setMargin(new Insets(10, 10, 10, 10));
         
         // Imagen, primero se carga como ImageIcon y luego lo paso a
         // Image para poder cambiar el tamaño
@@ -404,18 +408,23 @@ public class GUI_TEST extends JFrame implements ActionListener {
         panelComponenetesInternoCentroArriba.add(comenzarBuques, constraintsBotonComenzar);
         panelComponenetesInternoCentroArriba.add(pararBuques, constraintsBotonParar);
         
-        // Se añade el panel de componentes al del centro
+        panelComponenetesInternoCentroArriba.setVisible(true);
+        
+    // Se añade el panel de componentes al del centro
         ladoCentro.add(panelComponenetesInternoCentroAbajo, BorderLayout.SOUTH);
         ladoCentro.add(panelComponenetesInternoCentroArriba, BorderLayout.NORTH);
         
         // Se añade el panel del centro a su contenedor interno.
         ladoCentroInterno.add(ladoCentro, BorderLayout.CENTER);
-
+        
         // Adición de paneles al JFrame principal.
         // Como el panel principal utiliza BorderLayout, se pueden colocar los paneles en 
         // NORTH, EAST, SOUTH, WEST, CENTER.
         this.add(ladoIzquierdoInterno, BorderLayout.WEST);
         this.add(ladoCentroInterno, BorderLayout.CENTER);
+        
+        // Para no cambiar el tamaño (me rompe la posición de los componentes :) ).
+        this.setResizable(false);
         
         // Para que al comenzar la aplicación, el JFrame principal
         // aparezca en el centro de la pantalla. Sin esto, aparecería
@@ -429,5 +438,33 @@ public class GUI_TEST extends JFrame implements ActionListener {
     @Override
     public void actionPerformed(ActionEvent e) {
 
+        if (e.getSource() == comenzarBuques) {
+            
+            SwingUtilities.invokeLater(new Runnable() {
+            
+                @Override
+                public void run() {
+                    Ruta rutaMediterraneo = new Ruta("Ruta de comercio Mediterránea.");
+                    rutaBuques.append(new Buque("CINZIA A", rutaMediterraneo).toString());
+                }
+        });
+        }
     }
+    
+    /*
+    private void actualizarHilo(String text, Component component){
+        SwingUtilities.invokeLater(new Runnable(){
+            @Override
+                public void run() {
+                    if (component instanceof JTextArea){
+                        ((JTextArea) component).append(text);
+                        component.revalidate();
+                        component.repaint();
+                        System.out.println(rutaBuques.getText());
+                                }                      
+                            }
+                        }
+                    );
+                }
+*/
 }
