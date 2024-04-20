@@ -83,7 +83,8 @@ public class GUI_TEST extends JFrame implements ActionListener {
 
         // COMPONENTES DEL PANEL IZQUIERDO
         
-        // Crea un botón desplegable, cada elemento .
+        // Crea un botón desplegable, cada elemento del botón es
+        // un elemento del vector.
         String[] navieras = {"Arkas", "Maersk", "CMA"};
         listaNavieras = new JComboBox(navieras);
         // Cambio del tamaño manual para igualarlo a las listas desplegables.
