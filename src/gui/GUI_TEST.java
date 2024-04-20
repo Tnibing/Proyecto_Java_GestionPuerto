@@ -1,4 +1,4 @@
-package agentes;
+package gui;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
@@ -8,12 +8,14 @@ import java.awt.GridBagLayout;
 import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JTextArea;
 
 /**
  *
@@ -24,16 +26,12 @@ public class GUI_TEST extends JFrame implements ActionListener {
 
     // Todos los componentes que se van a usar en la interfaz gráfica.
     
-    // Botones con listas desplegables.
+    // Botones con listas desplegables PANEL IZQUIERDO.
     private JComboBox listaNavieras;
     private JComboBox listaPuertosOrigen;
     private JComboBox listaPuertosDestino;
-    
-    // Botones "click".
-    private JButton comenzarBuques;
-    private JButton pararBuques;
 
-    // Posicionamiento de componentes (Constraints).
+    // Posicionamiento de componentes (Constraints) PANEL IZQUIERDO.
     private GridBagConstraints constrainsListaPuertos;
     private GridBagConstraints constrainsListaPuertos2;
     private GridBagConstraints constraintsSeleccionPuertoOrigen;
@@ -41,17 +39,26 @@ public class GUI_TEST extends JFrame implements ActionListener {
     private GridBagConstraints constraintsListaNavieras;
     private GridBagConstraints seleccionPDestino;
 
-    // Texto.
+    // Texto PANEL IZQUIERDO.
     private JLabel seleccionPuertoOrigen;
     private JLabel seleccionPuertoDestino;
     private JLabel seleccionNaviera;
 
-    // Paneles.
+    // Botones "click" PANEL CENTRO.
+    private JButton comenzarBuques;
+    private JButton pararBuques;
+    
+    // Texto PANEL CENTRO.
+    private JTextArea rutaBuques;
+
+    // PANELES.
+    private JPanel ladoIzquierdoInterno;
     private JPanel ladoIzquierdo;
+    private JPanel ladoCentroInterno;
     private JPanel ladoCentro;
 
     public GUI_TEST() {
-
+        
         // Cambios del JFrame (ventana principal de la aplicación).
         this.setTitle("Gestión Portuaria");
         
@@ -67,12 +74,14 @@ public class GUI_TEST extends JFrame implements ActionListener {
 
         // Color de fondo del JFrame principal, si se añade un panel al JFrame
         // se posiciona por encima y el color ya no se vería.
-        // this.getContentPane().setBackground(new Color(0x649EFF));
+        this.getContentPane().setBackground(new Color(0x0F1C30));
         // El panel del centro tapa el color, añado este color al panel del centro (al crear el panel central más abajo).
 
         // Icono del JFrame principal.
         ImageIcon icono = new ImageIcon("buqueIcono.png");
         this.setIconImage(icono.getImage());
+        
+        
 
         /*
         *
@@ -82,11 +91,19 @@ public class GUI_TEST extends JFrame implements ActionListener {
         *
         */
         
+        // Panel interno para que se vean mejor los bordes del panel izquierdo con márgenes.
+        ladoIzquierdoInterno = new JPanel(new BorderLayout());
+        ladoIzquierdoInterno.setBorder(BorderFactory.createEmptyBorder(20, 20, 20, 10));
+        ladoIzquierdoInterno.setOpaque(false);
+        
+        // Panel izquierdo.
         // El panel principal (JFrame) usa el BorderLayout, este panel usa
         // GridBagLayout, permite un posicionamiento más concreto de los
         // componentes que se le añadan gracias al uso de constraints.
         ladoIzquierdo = new JPanel();
         ladoIzquierdo.setLayout(new GridBagLayout());
+        ladoIzquierdo.setBorder(new BordeRedondo(50));
+        ladoIzquierdo.setOpaque(false);
 
         // COMPONENTES DEL PANEL IZQUIERDO
         
@@ -108,14 +125,17 @@ public class GUI_TEST extends JFrame implements ActionListener {
         // (JLabel)
         seleccionPuertoOrigen = new JLabel();
         seleccionPuertoOrigen.setText("Puerto de origen:");
+        seleccionPuertoOrigen.setForeground(new Color(0xC2C6CE));
 
         // (JLabel)
         seleccionPuertoDestino = new JLabel();
         seleccionPuertoDestino.setText("Puerto de destino:");
+        seleccionPuertoDestino.setForeground(new Color(0xC2C6CE));
 
         // (JLabel)
         seleccionNaviera = new JLabel();
         seleccionNaviera.setText("Naviera:");
+        seleccionNaviera.setForeground(new Color(0xC2C6CE));
 
         // En los constraints, gridx = 0 -> primera columna, gridy modifica la fila.
         // Los componentes se colocan todos en la misma columna pero diferente fila.
@@ -186,13 +206,15 @@ public class GUI_TEST extends JFrame implements ActionListener {
         // Adición de componentes al panel izquierdo (los componentes que le correspondan
         // con sus respectivos constraints).
         ladoIzquierdo.setPreferredSize(new Dimension(290, 800));
-        ladoIzquierdo.setBackground(Color.WHITE);
+        ladoIzquierdo.setBackground(new Color(0x304A6E));
         ladoIzquierdo.add(seleccionPuertoOrigen, constraintsSeleccionPuertoOrigen);
         ladoIzquierdo.add(listaPuertosOrigen, constrainsListaPuertos);
         ladoIzquierdo.add(seleccionPuertoDestino, seleccionPDestino);
         ladoIzquierdo.add(listaPuertosDestino, constrainsListaPuertos2);
         ladoIzquierdo.add(seleccionNaviera, constraintsSeleccionNaviera);
         ladoIzquierdo.add(listaNavieras, constraintsListaNavieras);
+        
+        ladoIzquierdoInterno.add(ladoIzquierdo, BorderLayout.CENTER);
 
         /*
         *
@@ -202,9 +224,18 @@ public class GUI_TEST extends JFrame implements ActionListener {
         *
         */
         
+        // Panel interno para que se vean mejor los bordes y añadir margen al panel centro.
+        ladoCentroInterno = new JPanel(new BorderLayout());
+        ladoCentroInterno.setBorder(BorderFactory.createEmptyBorder(20, 10, 20, 20));
+        ladoCentroInterno.setOpaque(false);
+        
+        
+        // Panel centro.
         ladoCentro = new JPanel();
         ladoCentro.setLayout(new GridBagLayout());
-        ladoCentro.setBackground(new Color(0x649EFF));
+        ladoCentro.setBackground(new Color(0x668DC0));
+        ladoCentro.setBorder(new BordeRedondo(50));
+        ladoCentro.setOpaque(false);
         
         // COMPONENTES DEL PANEL CENTRO
         
@@ -214,10 +245,22 @@ public class GUI_TEST extends JFrame implements ActionListener {
         // (JButton)
         pararBuques = new JButton("Parar ruta");
         
-        // Adición de componentes al panel centro.
+        // (JTextArea)
+        rutaBuques = new JTextArea(1, 10);
+        rutaBuques.setEditable(false);
+        rutaBuques.setPreferredSize(new Dimension(800, 400));
+        rutaBuques.setBackground(new Color(0xC0D0EF));
+        rutaBuques.setForeground(new Color(0x0F1C30));
+        rutaBuques.setBorder(new BordeRedondo(50));
+        rutaBuques.setOpaque(false);
         
+        // Adición de componentes al panel centro.
+        ladoCentro.add(rutaBuques);
         ladoCentro.add(comenzarBuques);
         ladoCentro.add(pararBuques);
+        
+        // Se añade el panel del centro a su contenedor interno.
+        ladoCentroInterno.add(ladoCentro, BorderLayout.CENTER);
         
         /* 
         *
@@ -228,8 +271,8 @@ public class GUI_TEST extends JFrame implements ActionListener {
         // Adición de paneles al JFrame principal.
         // Como el panel principal utiliza BorderLayout, se pueden colocar los paneles en 
         // NORTH, EAST, SOUTH, WEST, CENTER.
-        this.add(ladoIzquierdo, BorderLayout.WEST);
-        this.add(ladoCentro, BorderLayout.CENTER);
+        this.add(ladoIzquierdoInterno, BorderLayout.WEST);
+        this.add(ladoCentroInterno, BorderLayout.CENTER);
         
         // Para que al comenzar la aplicación, el JFrame principal
         // aparezca en el centro de la pantalla. Sin esto, aparecería
