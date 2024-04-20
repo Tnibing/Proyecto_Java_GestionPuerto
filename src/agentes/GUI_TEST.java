@@ -33,7 +33,7 @@ public class GUI_TEST extends JFrame implements ActionListener {
     private JButton comenzarBuques;
     private JButton pararBuques;
 
-    // Posicionamiento de componentes.
+    // Posicionamiento de componentes (Constraints).
     private GridBagConstraints constrainsListaPuertos;
     private GridBagConstraints constrainsListaPuertos2;
     private GridBagConstraints constraintsSeleccionPuertoOrigen;
@@ -55,7 +55,7 @@ public class GUI_TEST extends JFrame implements ActionListener {
         // Cambios del JFrame (ventana principal de la aplicación).
         this.setTitle("Gestión Portuaria");
         
-        // Tamaño.
+        // Tamaño del JFrame.
         this.setSize(1400, 800);
 
         // Sin esto, al hacer click en la "X" el programa se escondería,
@@ -67,13 +67,20 @@ public class GUI_TEST extends JFrame implements ActionListener {
 
         // Color de fondo del JFrame principal, si se añade un panel al JFrame
         // se posiciona por encima y el color ya no se vería.
-        this.getContentPane().setBackground(new Color(0x649EFF));
+        // this.getContentPane().setBackground(new Color(0x649EFF));
+        // El panel del centro tapa el color, añado este color al panel del centro (al crear el panel central más abajo).
 
         // Icono del JFrame principal.
         ImageIcon icono = new ImageIcon("buqueIcono.png");
         this.setIconImage(icono.getImage());
 
-        // PANEL IZQUIERDO
+        /*
+        *
+        *
+        * PANEL IZQUIERDO
+        *
+        *
+        */
         
         // El panel principal (JFrame) usa el BorderLayout, este panel usa
         // GridBagLayout, permite un posicionamiento más concreto de los
@@ -90,28 +97,33 @@ public class GUI_TEST extends JFrame implements ActionListener {
         // Cambio del tamaño manual para igualarlo a las listas desplegables.
         listaNavieras.setPreferredSize(new Dimension(139, 25));
 
+        // (JComboBox)
         String[] puertosOrigen = {"Valencia (España)", "Castellón (España)", "Barcelona (España)", "Pireo (Grecia)", "Estambul (Turquía)", "Yarimca (Turquía)"};
         listaPuertosOrigen = new JComboBox(puertosOrigen);
 
+        // (JComboBox)
         String[] puertosDestino = {"Valencia (España)", "Castellón (España)", "Barcelona (España)", "Pireo (Grecia)", "Estambul (Turquía)", "Yarimca (Turquía)"};
         listaPuertosDestino = new JComboBox(puertosDestino);
 
+        // (JLabel)
         seleccionPuertoOrigen = new JLabel();
         seleccionPuertoOrigen.setText("Puerto de origen:");
 
+        // (JLabel)
         seleccionPuertoDestino = new JLabel();
         seleccionPuertoDestino.setText("Puerto de destino:");
 
+        // (JLabel)
         seleccionNaviera = new JLabel();
         seleccionNaviera.setText("Naviera:");
 
         // En los constraints, gridx = 0 -> primera columna, gridy modifica la fila.
         // Los componentes se colocan todos en la misma columna pero diferente fila.
-        // Weighty -> valor mayor, prioridad, ocupa el espacio disponible. Añado el weighty = 1 al último
+        // weighty -> valor mayor, prioridad, ocupa el espacio disponible. Añado el weighty = 1 al último
         // componente para que "empuje" a los demás hacia arriba, así consigo que estén
         // "anclados" en el top del panel, si no, aparecerían centrados.
         
-        // JLabel "Puerto de origen:"
+        // "Puerto de origen:" (JLabel Constraint)
         constraintsSeleccionPuertoOrigen = new GridBagConstraints();
         constraintsSeleccionPuertoOrigen.gridx = 0;
         constraintsSeleccionPuertoOrigen.gridy = 0;
@@ -121,7 +133,7 @@ public class GUI_TEST extends JFrame implements ActionListener {
         constraintsSeleccionPuertoOrigen.insets = new Insets(5, 5, 5, 5);
         constraintsSeleccionPuertoOrigen.weighty = 0;
 
-        // Lista de puertos (JComboBox).
+        // Lista de puertos (JComboBox Constraint).
         constrainsListaPuertos = new GridBagConstraints();
         constrainsListaPuertos.gridx = 0;
         constrainsListaPuertos.gridy = 1;
@@ -131,7 +143,7 @@ public class GUI_TEST extends JFrame implements ActionListener {
         constrainsListaPuertos.insets = new Insets(5, 5, 5, 5);
         constrainsListaPuertos.weighty = 0;
 
-        // JLabel "Puerto de destino:"
+        // "Puerto de destino:" (JLabel Constraint)
         seleccionPDestino = new GridBagConstraints();
         seleccionPDestino.gridx = 0;
         seleccionPDestino.gridy = 2;
@@ -141,7 +153,7 @@ public class GUI_TEST extends JFrame implements ActionListener {
         seleccionPDestino.insets = new Insets(5, 5, 5, 5);
         seleccionPDestino.weighty = 0;
 
-        // Lista de puertos (JComboBox).
+        // Lista de puertos (JComboBox Constraint).
         constrainsListaPuertos2 = new GridBagConstraints();
         constrainsListaPuertos2.gridx = 0;
         constrainsListaPuertos2.gridy = 3;
@@ -151,7 +163,7 @@ public class GUI_TEST extends JFrame implements ActionListener {
         constrainsListaPuertos2.insets = new Insets(5, 5, 5, 5);
         constrainsListaPuertos2.weighty = 0;
 
-        // JLabel "Naviera:"
+        // "Naviera:" (JLabel Constraint)
         constraintsSeleccionNaviera = new GridBagConstraints();
         constraintsSeleccionNaviera.gridx = 0;
         constraintsSeleccionNaviera.gridy = 4;
@@ -161,7 +173,7 @@ public class GUI_TEST extends JFrame implements ActionListener {
         constraintsSeleccionNaviera.insets = new Insets(50, 5, 5, 5);
         constraintsSeleccionNaviera.weighty = 0;
 
-        // Lista de navieras (JComboBox).
+        // Lista de navieras (JComboBox Constraint).
         constraintsListaNavieras = new GridBagConstraints();
         constraintsListaNavieras.gridx = 0;
         constraintsListaNavieras.gridy = 5;
@@ -182,12 +194,30 @@ public class GUI_TEST extends JFrame implements ActionListener {
         ladoIzquierdo.add(seleccionNaviera, constraintsSeleccionNaviera);
         ladoIzquierdo.add(listaNavieras, constraintsListaNavieras);
 
-        // PANEL CENTRO
+        /*
+        *
+        *
+        * PANEL CENTRO
+        *
+        *
+        */
         
         ladoCentro = new JPanel();
         ladoCentro.setLayout(new GridBagLayout());
+        ladoCentro.setBackground(new Color(0x649EFF));
         
         // COMPONENTES DEL PANEL CENTRO
+        
+        // (JButton)
+        comenzarBuques = new JButton("Iniciar ruta");
+        
+        // (JButton)
+        pararBuques = new JButton("Parar ruta");
+        
+        // Adición de componentes al panel centro.
+        
+        ladoCentro.add(comenzarBuques);
+        ladoCentro.add(pararBuques);
         
         /* 
         *
@@ -199,6 +229,7 @@ public class GUI_TEST extends JFrame implements ActionListener {
         // Como el panel principal utiliza BorderLayout, se pueden colocar los paneles en 
         // NORTH, EAST, SOUTH, WEST, CENTER.
         this.add(ladoIzquierdo, BorderLayout.WEST);
+        this.add(ladoCentro, BorderLayout.CENTER);
         
         // Para que al comenzar la aplicación, el JFrame principal
         // aparezca en el centro de la pantalla. Sin esto, aparecería
