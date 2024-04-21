@@ -32,56 +32,56 @@ public class GUI_TEST extends JFrame implements ActionListener {
     // PANEL IZQUIERDO
     
     // Botones con listas desplegables PANEL IZQUIERDO.
-    private JComboBox listaNavieras;
-    private JComboBox listaPuertosOrigen;
-    private JComboBox listaPuertosDestino;
+    private JComboBox listaNavierasComboBox;
+    private JComboBox listaPuertosOrigenComboBox;
+    private JComboBox listaPuertosDestinoComboBox;
 
     // Posicionamiento de componentes (Constraints) PANEL IZQUIERDO.
-    private GridBagConstraints constrainsListaPuertos;
-    private GridBagConstraints constrainsListaPuertos2;
-    private GridBagConstraints constraintsSeleccionPuertoOrigen;
-    private GridBagConstraints constraintsSeleccionNaviera;
-    private GridBagConstraints constraintsListaNavieras;
-    private GridBagConstraints seleccionPDestino;
+    private GridBagConstraints constrainsListaPuertosOrigenComboBox;
+    private GridBagConstraints constrainsListaPuertosDestinoComboBox;
+    private GridBagConstraints constraintsSeleccionPuertoOrigenJLabel;
+    private GridBagConstraints constraintsSeleccionNavieraJLabel;
+    private GridBagConstraints constraintsListaNavierasComboBox;
+    private GridBagConstraints constraintsSeleccionPuertoDestinoJLabel;
 
     // Texto PANEL IZQUIERDO.
-    private JLabel seleccionPuertoOrigen;
-    private JLabel seleccionPuertoDestino;
-    private JLabel seleccionNaviera;
+    private JLabel seleccionPuertoOrigenJLabel;
+    private JLabel seleccionPuertoDestinoJLabel;
+    private JLabel seleccionNavieraJLabel;
     
     // PANEL CENTRO
     
     // Botones "click" PANEL CENTRO.
-    private JButton comenzarBuques;
-    private JButton pararBuques;
-    private JButton infoPuertosBoton;
+    private JButton comenzarBuquesJButton;
+    private JButton pararBuquesJButton;
+    private JButton infoPuertosJButton;
     
     // Texto PANEL CENTRO.
-    private JTextArea rutaBuques;
-    private JTextArea infoPuertosTexto;
-    private JScrollPane scrollTextoBuques;
-    private JScrollPane scrollTextoPuertos;
+    private JTextArea rutaBuquesJTextArea;
+    private JTextArea infoPuertosTextoJTextArea;
+    private JScrollPane scrollTextoBuquesJTextArea;
+    private JScrollPane scrollTextoPuertosJTextArea;
     
     // JLabel para imágenes PANEL CENTRO.
-    private JLabel contenedorImagenCentroBuque;
-    private JLabel contenedorImagenCentroPuerto;
+    private JLabel contenedorImagenCentroBuqueJLabel;
+    private JLabel contenedorImagenCentroPuertoJLabel;
     
     // Posicionameinto de componentes (Constraints) PANEL CENTRO
-    private GridBagConstraints constraintsRutaBuques;
-    private GridBagConstraints constraintsBotonComenzar;
-    private GridBagConstraints constraintsBotonParar;
-    private GridBagConstraints  constraintsImagenBuque;
-    private GridBagConstraints constraintsImagenPuerto;
-    private GridBagConstraints constraintsInfoPuertosBoton;
-    private GridBagConstraints constraintsInfoPuertosTexto;
+    private GridBagConstraints constraintsRutaBuquesJTextArea;
+    private GridBagConstraints constraintsComenzarBuquesJButton;
+    private GridBagConstraints constraintsPararBuquesJButton;
+    private GridBagConstraints  constraintsContenedorImagenCentroBuqueJLabel;
+    private GridBagConstraints constraintsContenedorImagenCentroPuertoJLabel;
+    private GridBagConstraints constraintsInfoPuertosJButton;
+    private GridBagConstraints constraintsInfoTextoPuertosJTextArea;
 
     // PANELES.
-    private JPanel ladoIzquierdoInterno;
-    private JPanel ladoIzquierdo;
-    private JPanel ladoCentroInterno;
-    private JPanel ladoCentro;
-    private JPanel panelComponenetesInternoCentroArriba;
-    private JPanel panelComponenetesInternoCentroAbajo;
+    private JPanel ladoIzquierdoInternoJPanel;
+    private JPanel ladoIzquierdoJPanel;
+    private JPanel ladoCentroInternoJPanel;
+    private JPanel ladoCentroJPanel;
+    private JPanel panelComponenetesInternoCentroArribaJPanel;
+    private JPanel panelComponenetesInternoCentroAbajoJPanel;
 
     public GUI_TEST() {
         
@@ -116,50 +116,50 @@ public class GUI_TEST extends JFrame implements ActionListener {
         */
         
         // Panel interno para que se vean mejor los bordes del panel izquierdo con márgenes.
-        ladoIzquierdoInterno = new JPanel(new BorderLayout());
-        ladoIzquierdoInterno.setBorder(BorderFactory.createEmptyBorder(20, 20, 20, 10));
-        ladoIzquierdoInterno.setOpaque(false);
+        ladoIzquierdoInternoJPanel = new JPanel(new BorderLayout());
+        ladoIzquierdoInternoJPanel.setBorder(BorderFactory.createEmptyBorder(20, 20, 20, 10));
+        ladoIzquierdoInternoJPanel.setOpaque(false);
         
         // Panel izquierdo.
         // El panel principal (JFrame) usa el BorderLayout, este panel usa
         // GridBagLayout, permite un posicionamiento más concreto de los
         // componentes que se le añadan gracias al uso de constraints.
-        ladoIzquierdo = new JPanel();
-        ladoIzquierdo.setLayout(new GridBagLayout());
-        ladoIzquierdo.setBorder(new BordeRedondo(50));
-        ladoIzquierdo.setOpaque(false);
+        ladoIzquierdoJPanel = new JPanel();
+        ladoIzquierdoJPanel.setLayout(new GridBagLayout());
+        ladoIzquierdoJPanel.setBorder(new BordeRedondo(50));
+        ladoIzquierdoJPanel.setOpaque(false);
 
         // COMPONENTES DEL PANEL IZQUIERDO
         
         // Crea un botón desplegable, cada elemento del botón es
         // un elemento del vector.
         String[] navieras = {"Arkas", "Maersk", "CMA"};
-        listaNavieras = new JComboBox(navieras);
+        listaNavierasComboBox = new JComboBox(navieras);
         // Cambio del tamaño manual para igualarlo a las listas desplegables.
-        listaNavieras.setPreferredSize(new Dimension(139, 25));
+        listaNavierasComboBox.setPreferredSize(new Dimension(139, 25));
 
         // (JComboBox)
         String[] puertosOrigen = {"Valencia (España)", "Castellón (España)", "Barcelona (España)", "Pireo (Grecia)", "Estambul (Turquía)", "Yarimca (Turquía)"};
-        listaPuertosOrigen = new JComboBox(puertosOrigen);
+        listaPuertosOrigenComboBox = new JComboBox(puertosOrigen);
 
         // (JComboBox)
         String[] puertosDestino = {"Valencia (España)", "Castellón (España)", "Barcelona (España)", "Pireo (Grecia)", "Estambul (Turquía)", "Yarimca (Turquía)"};
-        listaPuertosDestino = new JComboBox(puertosDestino);
+        listaPuertosDestinoComboBox = new JComboBox(puertosDestino);
 
         // (JLabel)
-        seleccionPuertoOrigen = new JLabel();
-        seleccionPuertoOrigen.setText("Puerto de origen:");
-        seleccionPuertoOrigen.setForeground(Color.WHITE);
+        seleccionPuertoOrigenJLabel = new JLabel();
+        seleccionPuertoOrigenJLabel.setText("Puerto de origen:");
+        seleccionPuertoOrigenJLabel.setForeground(Color.WHITE);
 
         // (JLabel)
-        seleccionPuertoDestino = new JLabel();
-        seleccionPuertoDestino.setText("Puerto de destino:");
-        seleccionPuertoDestino.setForeground(Color.WHITE);
+        seleccionPuertoDestinoJLabel = new JLabel();
+        seleccionPuertoDestinoJLabel.setText("Puerto de destino:");
+        seleccionPuertoDestinoJLabel.setForeground(Color.WHITE);
 
         // (JLabel)
-        seleccionNaviera = new JLabel();
-        seleccionNaviera.setText("Naviera:");
-        seleccionNaviera.setForeground(Color.WHITE);
+        seleccionNavieraJLabel = new JLabel();
+        seleccionNavieraJLabel.setText("Naviera:");
+        seleccionNavieraJLabel.setForeground(Color.WHITE);
 
         // En los constraints, gridx = 0 -> primera columna, gridy modifica la fila.
         // Los componentes se colocan todos en la misma columna pero diferente fila.
@@ -170,77 +170,77 @@ public class GUI_TEST extends JFrame implements ActionListener {
         // CONSTRAINTS COMPONENTES PANEL IZQUIERDO
         
         // "Puerto de origen:" (JLabel Constraint)
-        constraintsSeleccionPuertoOrigen = new GridBagConstraints();
-        constraintsSeleccionPuertoOrigen.gridx = 0;
-        constraintsSeleccionPuertoOrigen.gridy = 0;
-        constraintsSeleccionPuertoOrigen.gridwidth = 1;
-        constraintsSeleccionPuertoOrigen.gridheight = 1;
-        constraintsSeleccionPuertoOrigen.anchor = GridBagConstraints.NORTH;
-        constraintsSeleccionPuertoOrigen.insets = new Insets(5, 5, 5, 5);
-        constraintsSeleccionPuertoOrigen.weighty = 0;
+        constraintsSeleccionPuertoOrigenJLabel = new GridBagConstraints();
+        constraintsSeleccionPuertoOrigenJLabel.gridx = 0;
+        constraintsSeleccionPuertoOrigenJLabel.gridy = 0;
+        constraintsSeleccionPuertoOrigenJLabel.gridwidth = 1;
+        constraintsSeleccionPuertoOrigenJLabel.gridheight = 1;
+        constraintsSeleccionPuertoOrigenJLabel.anchor = GridBagConstraints.NORTH;
+        constraintsSeleccionPuertoOrigenJLabel.insets = new Insets(5, 5, 5, 5);
+        constraintsSeleccionPuertoOrigenJLabel.weighty = 0;
 
         // Lista de puertos (JComboBox Constraint).
-        constrainsListaPuertos = new GridBagConstraints();
-        constrainsListaPuertos.gridx = 0;
-        constrainsListaPuertos.gridy = 1;
-        constrainsListaPuertos.gridwidth = 1;
-        constrainsListaPuertos.gridheight = 1;
-        constrainsListaPuertos.anchor = GridBagConstraints.NORTH;
-        constrainsListaPuertos.insets = new Insets(5, 5, 5, 5);
-        constrainsListaPuertos.weighty = 0;
+        constrainsListaPuertosOrigenComboBox = new GridBagConstraints();
+        constrainsListaPuertosOrigenComboBox.gridx = 0;
+        constrainsListaPuertosOrigenComboBox.gridy = 1;
+        constrainsListaPuertosOrigenComboBox.gridwidth = 1;
+        constrainsListaPuertosOrigenComboBox.gridheight = 1;
+        constrainsListaPuertosOrigenComboBox.anchor = GridBagConstraints.NORTH;
+        constrainsListaPuertosOrigenComboBox.insets = new Insets(5, 5, 5, 5);
+        constrainsListaPuertosOrigenComboBox.weighty = 0;
 
         // "Puerto de destino:" (JLabel Constraint)
-        seleccionPDestino = new GridBagConstraints();
-        seleccionPDestino.gridx = 0;
-        seleccionPDestino.gridy = 2;
-        seleccionPDestino.gridwidth = 1;
-        seleccionPDestino.gridheight = 1;
-        seleccionPDestino.anchor = GridBagConstraints.NORTH;
-        seleccionPDestino.insets = new Insets(5, 5, 5, 5);
-        seleccionPDestino.weighty = 0;
+        constraintsSeleccionPuertoDestinoJLabel = new GridBagConstraints();
+        constraintsSeleccionPuertoDestinoJLabel.gridx = 0;
+        constraintsSeleccionPuertoDestinoJLabel.gridy = 2;
+        constraintsSeleccionPuertoDestinoJLabel.gridwidth = 1;
+        constraintsSeleccionPuertoDestinoJLabel.gridheight = 1;
+        constraintsSeleccionPuertoDestinoJLabel.anchor = GridBagConstraints.NORTH;
+        constraintsSeleccionPuertoDestinoJLabel.insets = new Insets(5, 5, 5, 5);
+        constraintsSeleccionPuertoDestinoJLabel.weighty = 0;
 
         // Lista de puertos (JComboBox Constraint).
-        constrainsListaPuertos2 = new GridBagConstraints();
-        constrainsListaPuertos2.gridx = 0;
-        constrainsListaPuertos2.gridy = 3;
-        constrainsListaPuertos2.gridwidth = 1;
-        constrainsListaPuertos2.gridheight = 1;
-        constrainsListaPuertos2.anchor = GridBagConstraints.NORTH;
-        constrainsListaPuertos2.insets = new Insets(5, 5, 5, 5);
-        constrainsListaPuertos2.weighty = 0;
+        constrainsListaPuertosDestinoComboBox = new GridBagConstraints();
+        constrainsListaPuertosDestinoComboBox.gridx = 0;
+        constrainsListaPuertosDestinoComboBox.gridy = 3;
+        constrainsListaPuertosDestinoComboBox.gridwidth = 1;
+        constrainsListaPuertosDestinoComboBox.gridheight = 1;
+        constrainsListaPuertosDestinoComboBox.anchor = GridBagConstraints.NORTH;
+        constrainsListaPuertosDestinoComboBox.insets = new Insets(5, 5, 5, 5);
+        constrainsListaPuertosDestinoComboBox.weighty = 0;
 
         // "Naviera:" (JLabel Constraint)
-        constraintsSeleccionNaviera = new GridBagConstraints();
-        constraintsSeleccionNaviera.gridx = 0;
-        constraintsSeleccionNaviera.gridy = 4;
-        constraintsSeleccionNaviera.gridwidth = 1;
-        constraintsSeleccionNaviera.gridheight = 1;
-        constraintsSeleccionNaviera.anchor = GridBagConstraints.NORTH;
-        constraintsSeleccionNaviera.insets = new Insets(50, 5, 5, 5);
-        constraintsSeleccionNaviera.weighty = 0;
+        constraintsSeleccionNavieraJLabel = new GridBagConstraints();
+        constraintsSeleccionNavieraJLabel.gridx = 0;
+        constraintsSeleccionNavieraJLabel.gridy = 4;
+        constraintsSeleccionNavieraJLabel.gridwidth = 1;
+        constraintsSeleccionNavieraJLabel.gridheight = 1;
+        constraintsSeleccionNavieraJLabel.anchor = GridBagConstraints.NORTH;
+        constraintsSeleccionNavieraJLabel.insets = new Insets(50, 5, 5, 5);
+        constraintsSeleccionNavieraJLabel.weighty = 0;
 
         // Lista de navieras (JComboBox Constraint).
-        constraintsListaNavieras = new GridBagConstraints();
-        constraintsListaNavieras.gridx = 0;
-        constraintsListaNavieras.gridy = 5;
-        constraintsListaNavieras.gridwidth = 1;
-        constraintsListaNavieras.gridheight = 1;
-        constraintsListaNavieras.anchor = GridBagConstraints.NORTH;
-        constraintsListaNavieras.insets = new Insets(5, 5, 5, 5);
-        constraintsListaNavieras.weighty = 1;
+        constraintsListaNavierasComboBox = new GridBagConstraints();
+        constraintsListaNavierasComboBox.gridx = 0;
+        constraintsListaNavierasComboBox.gridy = 5;
+        constraintsListaNavierasComboBox.gridwidth = 1;
+        constraintsListaNavierasComboBox.gridheight = 1;
+        constraintsListaNavierasComboBox.anchor = GridBagConstraints.NORTH;
+        constraintsListaNavierasComboBox.insets = new Insets(5, 5, 5, 5);
+        constraintsListaNavierasComboBox.weighty = 1;
 
         // Adición de componentes al panel izquierdo (los componentes que le correspondan
         // con sus respectivos constraints).
-        ladoIzquierdo.setPreferredSize(new Dimension(290, 800));
-        ladoIzquierdo.setBackground(new Color(0x304A6E));
-        ladoIzquierdo.add(seleccionPuertoOrigen, constraintsSeleccionPuertoOrigen);
-        ladoIzquierdo.add(listaPuertosOrigen, constrainsListaPuertos);
-        ladoIzquierdo.add(seleccionPuertoDestino, seleccionPDestino);
-        ladoIzquierdo.add(listaPuertosDestino, constrainsListaPuertos2);
-        ladoIzquierdo.add(seleccionNaviera, constraintsSeleccionNaviera);
-        ladoIzquierdo.add(listaNavieras, constraintsListaNavieras);
+        ladoIzquierdoJPanel.setPreferredSize(new Dimension(290, 800));
+        ladoIzquierdoJPanel.setBackground(new Color(0x304A6E));
+        ladoIzquierdoJPanel.add(seleccionPuertoOrigenJLabel, constraintsSeleccionPuertoOrigenJLabel);
+        ladoIzquierdoJPanel.add(listaPuertosOrigenComboBox, constrainsListaPuertosOrigenComboBox);
+        ladoIzquierdoJPanel.add(seleccionPuertoDestinoJLabel, constraintsSeleccionPuertoDestinoJLabel);
+        ladoIzquierdoJPanel.add(listaPuertosDestinoComboBox, constrainsListaPuertosDestinoComboBox);
+        ladoIzquierdoJPanel.add(seleccionNavieraJLabel, constraintsSeleccionNavieraJLabel);
+        ladoIzquierdoJPanel.add(listaNavierasComboBox, constraintsListaNavierasComboBox);
         
-        ladoIzquierdoInterno.add(ladoIzquierdo, BorderLayout.CENTER);
+        ladoIzquierdoInternoJPanel.add(ladoIzquierdoJPanel, BorderLayout.CENTER);
 
         /*
         *
@@ -251,66 +251,66 @@ public class GUI_TEST extends JFrame implements ActionListener {
         */
         
         // Panel interno para que se vean mejor los bordes y añadir margen al panel centro.
-        ladoCentroInterno = new JPanel(new BorderLayout());
-        ladoCentroInterno.setBorder(BorderFactory.createEmptyBorder(20, 10, 20, 20));
-        ladoCentroInterno.setOpaque(false);
+        ladoCentroInternoJPanel = new JPanel(new BorderLayout());
+        ladoCentroInternoJPanel.setBorder(BorderFactory.createEmptyBorder(20, 10, 20, 20));
+        ladoCentroInternoJPanel.setOpaque(false);
         
         // Panel centro.
-        ladoCentro = new JPanel();
-        ladoCentro.setLayout(new BorderLayout());
-        ladoCentro.setBackground(new Color(0x668DC0));
-        ladoCentro.setBorder(new BordeRedondo(50));
-        ladoCentro.setOpaque(false);
+        ladoCentroJPanel = new JPanel();
+        ladoCentroJPanel.setLayout(new BorderLayout());
+        ladoCentroJPanel.setBackground(new Color(0x668DC0));
+        ladoCentroJPanel.setBorder(new BordeRedondo(50));
+        ladoCentroJPanel.setOpaque(false);
         
         // COMPONENTES DEL PANEL CENTRO
         
         // (JPanel) Panel de los componentes de abajo.
-        panelComponenetesInternoCentroAbajo = new JPanel();
-        panelComponenetesInternoCentroAbajo.setLayout(new GridBagLayout());
-        panelComponenetesInternoCentroAbajo.setOpaque(false);
+        panelComponenetesInternoCentroAbajoJPanel = new JPanel();
+        panelComponenetesInternoCentroAbajoJPanel.setLayout(new GridBagLayout());
+        panelComponenetesInternoCentroAbajoJPanel.setOpaque(false);
         
         // (JPanel) Panel de los componentes de arriba.
-        panelComponenetesInternoCentroArriba = new JPanel();
-        panelComponenetesInternoCentroArriba.setLayout(new GridBagLayout());
-        panelComponenetesInternoCentroArriba.setOpaque(false);
+        panelComponenetesInternoCentroArribaJPanel = new JPanel();
+        panelComponenetesInternoCentroArribaJPanel.setLayout(new GridBagLayout());
+        panelComponenetesInternoCentroArribaJPanel.setOpaque(false);
         
         // (JButton) info puertos.
-        infoPuertosBoton = new JButton("Mostrar información de puertos");
+        infoPuertosJButton = new JButton("Mostrar información de puertos");
         
         // (JTextArea) Buques.
-        rutaBuques = new JTextArea(10, 1);
-        rutaBuques.setEditable(true);
-        rutaBuques.setPreferredSize(new Dimension(700, 300));
-        rutaBuques.setBackground(new Color(0xC0D0EF));
-        rutaBuques.setForeground(Color.BLACK);
-        rutaBuques.setOpaque(true);
-        rutaBuques.setMargin(new Insets(10, 10, 10, 10));
-        rutaBuques.setEditable(false);
+        rutaBuquesJTextArea = new JTextArea(10, 1);
+        rutaBuquesJTextArea.setEditable(true);
+        rutaBuquesJTextArea.setPreferredSize(new Dimension(700, 300));
+        rutaBuquesJTextArea.setBackground(new Color(0xC0D0EF));
+        rutaBuquesJTextArea.setForeground(Color.BLACK);
+        rutaBuquesJTextArea.setOpaque(true);
+        rutaBuquesJTextArea.setMargin(new Insets(10, 10, 10, 10));
+        rutaBuquesJTextArea.setEditable(false);
         
-        // Barra de scroll para rutaBuques.
-        scrollTextoBuques = new JScrollPane(rutaBuques);
-        scrollTextoBuques.setPreferredSize(new Dimension(700, 300));
+        // Barra de scroll para rutaBuquesJTextArea.
+        scrollTextoBuquesJTextArea = new JScrollPane(rutaBuquesJTextArea);
+        scrollTextoBuquesJTextArea.setPreferredSize(new Dimension(700, 300));
         
         // (JButton) iniciar ruta.
-        comenzarBuques = new JButton("Iniciar ruta");
-        comenzarBuques.addActionListener(this);
+        comenzarBuquesJButton = new JButton("Iniciar ruta");
+        comenzarBuquesJButton.addActionListener(this);
 
         // (JButton) parar ruta.
-        pararBuques = new JButton("Parar ruta");
-        pararBuques.setPreferredSize(comenzarBuques.getPreferredSize());
+        pararBuquesJButton = new JButton("Parar ruta");
+        pararBuquesJButton.setPreferredSize(comenzarBuquesJButton.getPreferredSize());
         
         // (JTextArea) Puertos.
-        infoPuertosTexto = new JTextArea(1, 10);
-        infoPuertosTexto.setEditable(false);
-        infoPuertosTexto.setPreferredSize(new Dimension(700, 300));
-        infoPuertosTexto.setBackground(new Color(0xC0D0EF));
-        infoPuertosTexto.setForeground(Color.BLACK);
-        infoPuertosTexto.setOpaque(true);
-        infoPuertosTexto.setMargin(new Insets(10, 10, 10, 10));
+        infoPuertosTextoJTextArea = new JTextArea(0, 0);
+        infoPuertosTextoJTextArea.setEditable(false);
+        infoPuertosTextoJTextArea.setPreferredSize(new Dimension(700, 300));
+        infoPuertosTextoJTextArea.setBackground(new Color(0xC0D0EF));
+        infoPuertosTextoJTextArea.setForeground(Color.BLACK);
+        infoPuertosTextoJTextArea.setOpaque(true);
+        infoPuertosTextoJTextArea.setMargin(new Insets(10, 10, 10, 10));
 
         // Barra de scroll para puertos.
-        scrollTextoPuertos = new JScrollPane(infoPuertosTexto);
-        scrollTextoPuertos.setPreferredSize(new Dimension(700, 300));
+        scrollTextoPuertosJTextArea = new JScrollPane(infoPuertosTextoJTextArea);
+        scrollTextoPuertosJTextArea.setPreferredSize(new Dimension(700, 300));
         
         // Imagen, primero se carga como ImageIcon y luego lo paso a
         // Image para poder cambiar el tamaño
@@ -326,112 +326,112 @@ public class GUI_TEST extends JFrame implements ActionListener {
         ImageIcon puertoImgFinal = new ImageIcon(puertoImgEscalada);
         
         // JLabel para la imagen (buque)
-        contenedorImagenCentroBuque = new JLabel(buqueImgFinal);
+        contenedorImagenCentroBuqueJLabel = new JLabel(buqueImgFinal);
         
         // Otro JLabel para la otra imagen (puerto)
-        contenedorImagenCentroPuerto = new JLabel(puertoImgFinal);
+        contenedorImagenCentroPuertoJLabel = new JLabel(puertoImgFinal);
         
         // CONSTRAINTS COMPONENTES PANEL CENTRO 
         
         // Ruta buques (JTextArea Constraint)
-        constraintsRutaBuques = new GridBagConstraints();
-        constraintsRutaBuques.gridx = 0;
-        constraintsRutaBuques.gridy = 0;
-        constraintsRutaBuques.gridwidth = 1;
-        constraintsRutaBuques.gridheight = 1;
-        constraintsRutaBuques.anchor = GridBagConstraints.NORTH;
-        constraintsRutaBuques.insets = new Insets(5, 5, 5, 5);
-        constraintsRutaBuques.weighty = 0;
+        constraintsRutaBuquesJTextArea = new GridBagConstraints();
+        constraintsRutaBuquesJTextArea.gridx = 0;
+        constraintsRutaBuquesJTextArea.gridy = 0;
+        constraintsRutaBuquesJTextArea.gridwidth = 1;
+        constraintsRutaBuquesJTextArea.gridheight = 1;
+        constraintsRutaBuquesJTextArea.anchor = GridBagConstraints.NORTH;
+        constraintsRutaBuquesJTextArea.insets = new Insets(5, 5, 5, 5);
+        constraintsRutaBuquesJTextArea.weighty = 0;
         
         // Info puertos (JTextArea Constraint)
-        constraintsInfoPuertosTexto = new GridBagConstraints();
-        constraintsInfoPuertosTexto.gridx = 1;
-        constraintsInfoPuertosTexto.gridy = 1;
-        constraintsInfoPuertosTexto.gridwidth = 0;
-        constraintsInfoPuertosTexto.gridheight = 0;
-        constraintsInfoPuertosTexto.anchor = GridBagConstraints.EAST;
-        constraintsInfoPuertosTexto.insets = new Insets(350, 0, 0, 0);
-        constraintsInfoPuertosTexto.weighty = 0;
-        constraintsInfoPuertosTexto.weightx = 1;
+        constraintsInfoTextoPuertosJTextArea = new GridBagConstraints();
+        constraintsInfoTextoPuertosJTextArea.gridx = 1;
+        constraintsInfoTextoPuertosJTextArea.gridy = 1;
+        constraintsInfoTextoPuertosJTextArea.gridwidth = 0;
+        constraintsInfoTextoPuertosJTextArea.gridheight = 0;
+        constraintsInfoTextoPuertosJTextArea.anchor = GridBagConstraints.EAST;
+        constraintsInfoTextoPuertosJTextArea.insets = new Insets(350, 0, 0, 0);
+        constraintsInfoTextoPuertosJTextArea.weighty = 0;
+        constraintsInfoTextoPuertosJTextArea.weightx = 1;
         
         // Imagen buque (ImageIcon Constraints)
-        constraintsImagenBuque = new GridBagConstraints();
-        constraintsImagenBuque.gridx = 1;
-        constraintsImagenBuque.gridy = 0;
-        constraintsImagenBuque.gridwidth = 0;
-        constraintsImagenBuque.gridheight = 0;
-        constraintsImagenBuque.anchor = GridBagConstraints.NORTH;
-        constraintsImagenBuque.insets = new Insets(30, 80, 5, 5);
-        constraintsImagenBuque.weighty = 0;
-        constraintsImagenBuque.weightx = 0;
+        constraintsContenedorImagenCentroBuqueJLabel = new GridBagConstraints();
+        constraintsContenedorImagenCentroBuqueJLabel.gridx = 1;
+        constraintsContenedorImagenCentroBuqueJLabel.gridy = 0;
+        constraintsContenedorImagenCentroBuqueJLabel.gridwidth = 0;
+        constraintsContenedorImagenCentroBuqueJLabel.gridheight = 0;
+        constraintsContenedorImagenCentroBuqueJLabel.anchor = GridBagConstraints.NORTH;
+        constraintsContenedorImagenCentroBuqueJLabel.insets = new Insets(30, 80, 5, 5);
+        constraintsContenedorImagenCentroBuqueJLabel.weighty = 0;
+        constraintsContenedorImagenCentroBuqueJLabel.weightx = 0;
         
         // Boton comenzar (JButton Constraint)
-        constraintsBotonComenzar = new GridBagConstraints();
-        constraintsBotonComenzar.gridx = 1;
-        constraintsBotonComenzar.gridy = 0;
-        constraintsBotonComenzar.gridwidth = 1;
-        constraintsBotonComenzar.gridheight = 1;
-        constraintsBotonComenzar.anchor = GridBagConstraints.NORTH;
-        constraintsBotonComenzar.insets = new Insets(170, 80, 5, 5);
-        constraintsBotonComenzar.weighty = 0;
+        constraintsComenzarBuquesJButton = new GridBagConstraints();
+        constraintsComenzarBuquesJButton.gridx = 1;
+        constraintsComenzarBuquesJButton.gridy = 0;
+        constraintsComenzarBuquesJButton.gridwidth = 1;
+        constraintsComenzarBuquesJButton.gridheight = 1;
+        constraintsComenzarBuquesJButton.anchor = GridBagConstraints.NORTH;
+        constraintsComenzarBuquesJButton.insets = new Insets(170, 80, 5, 5);
+        constraintsComenzarBuquesJButton.weighty = 0;
         
         // Boton parar (JButton Constraint)
-        constraintsBotonParar = new GridBagConstraints();
-        constraintsBotonParar.gridx = 1;
-        constraintsBotonParar.gridy = 0;
-        constraintsBotonParar.gridwidth = 1;
-        constraintsBotonParar.gridheight = 1;
-        constraintsBotonParar.anchor = GridBagConstraints.NORTH;
-        constraintsBotonParar.insets = new Insets(220, 80, 5, 5);
-        constraintsBotonParar.weighty = 1;
+        constraintsPararBuquesJButton = new GridBagConstraints();
+        constraintsPararBuquesJButton.gridx = 1;
+        constraintsPararBuquesJButton.gridy = 0;
+        constraintsPararBuquesJButton.gridwidth = 1;
+        constraintsPararBuquesJButton.gridheight = 1;
+        constraintsPararBuquesJButton.anchor = GridBagConstraints.NORTH;
+        constraintsPararBuquesJButton.insets = new Insets(220, 80, 5, 5);
+        constraintsPararBuquesJButton.weighty = 1;
         
         // Boton info puertos (JButton Constraint)
-        constraintsInfoPuertosBoton = new GridBagConstraints();
-        constraintsInfoPuertosBoton.gridx = 0;
-        constraintsInfoPuertosBoton.gridy = 1;
-        constraintsInfoPuertosBoton.gridwidth = 1;
-        constraintsInfoPuertosBoton.gridheight = 1;
-        constraintsInfoPuertosBoton.anchor = GridBagConstraints.WEST;
-        constraintsInfoPuertosBoton.insets = new Insets(520, 0, 0, 20);
-        constraintsInfoPuertosBoton.weighty = 1;
-        constraintsInfoPuertosBoton.weightx = 0;
+        constraintsInfoPuertosJButton = new GridBagConstraints();
+        constraintsInfoPuertosJButton.gridx = 0;
+        constraintsInfoPuertosJButton.gridy = 1;
+        constraintsInfoPuertosJButton.gridwidth = 1;
+        constraintsInfoPuertosJButton.gridheight = 1;
+        constraintsInfoPuertosJButton.anchor = GridBagConstraints.WEST;
+        constraintsInfoPuertosJButton.insets = new Insets(520, 0, 0, 20);
+        constraintsInfoPuertosJButton.weighty = 1;
+        constraintsInfoPuertosJButton.weightx = 0;
         
         // Imagen Puerto (ImageIcon Constraints)
-        constraintsImagenPuerto = new GridBagConstraints();
-        constraintsImagenPuerto.gridx = 0;
-        constraintsImagenPuerto.gridy = 0;
-        constraintsImagenPuerto.gridwidth = 0;
-        constraintsImagenPuerto.gridheight = 0;
-        constraintsImagenPuerto.anchor = GridBagConstraints.SOUTH;
-        constraintsImagenPuerto.insets = new Insets(100, 20, 140, 750);
-        constraintsImagenPuerto.weighty = 0;
-        constraintsImagenPuerto.weightx = 0;
+        constraintsContenedorImagenCentroPuertoJLabel = new GridBagConstraints();
+        constraintsContenedorImagenCentroPuertoJLabel.gridx = 0;
+        constraintsContenedorImagenCentroPuertoJLabel.gridy = 0;
+        constraintsContenedorImagenCentroPuertoJLabel.gridwidth = 0;
+        constraintsContenedorImagenCentroPuertoJLabel.gridheight = 0;
+        constraintsContenedorImagenCentroPuertoJLabel.anchor = GridBagConstraints.SOUTH;
+        constraintsContenedorImagenCentroPuertoJLabel.insets = new Insets(100, 20, 140, 750);
+        constraintsContenedorImagenCentroPuertoJLabel.weighty = 0;
+        constraintsContenedorImagenCentroPuertoJLabel.weightx = 0;
         
         // Adición de componentes al panel de centro-abajo
-        panelComponenetesInternoCentroAbajo.add(contenedorImagenCentroPuerto, constraintsImagenPuerto);
-        panelComponenetesInternoCentroAbajo.add(scrollTextoPuertos, constraintsInfoPuertosTexto);
-        panelComponenetesInternoCentroAbajo.add(infoPuertosBoton, constraintsInfoPuertosBoton);
+        panelComponenetesInternoCentroAbajoJPanel.add(contenedorImagenCentroPuertoJLabel, constraintsContenedorImagenCentroPuertoJLabel);
+        panelComponenetesInternoCentroAbajoJPanel.add(scrollTextoPuertosJTextArea, constraintsInfoTextoPuertosJTextArea);
+        panelComponenetesInternoCentroAbajoJPanel.add(infoPuertosJButton, constraintsInfoPuertosJButton);
         
         // Adición de componentes al panel de centro-arriba
-        panelComponenetesInternoCentroArriba.add(scrollTextoBuques, constraintsRutaBuques);
-        panelComponenetesInternoCentroArriba.add(contenedorImagenCentroBuque, constraintsImagenBuque);
-        panelComponenetesInternoCentroArriba.add(comenzarBuques, constraintsBotonComenzar);
-        panelComponenetesInternoCentroArriba.add(pararBuques, constraintsBotonParar);
+        panelComponenetesInternoCentroArribaJPanel.add(scrollTextoBuquesJTextArea, constraintsRutaBuquesJTextArea);
+        panelComponenetesInternoCentroArribaJPanel.add(contenedorImagenCentroBuqueJLabel, constraintsContenedorImagenCentroBuqueJLabel);
+        panelComponenetesInternoCentroArribaJPanel.add(comenzarBuquesJButton, constraintsComenzarBuquesJButton);
+        panelComponenetesInternoCentroArribaJPanel.add(pararBuquesJButton, constraintsPararBuquesJButton);
         
-        panelComponenetesInternoCentroArriba.setVisible(true);
+        panelComponenetesInternoCentroArribaJPanel.setVisible(true);
         
         // Se añade el panel de componentes al del centro
-        ladoCentro.add(panelComponenetesInternoCentroAbajo, BorderLayout.SOUTH);
-        ladoCentro.add(panelComponenetesInternoCentroArriba, BorderLayout.NORTH);
+        ladoCentroJPanel.add(panelComponenetesInternoCentroAbajoJPanel, BorderLayout.SOUTH);
+        ladoCentroJPanel.add(panelComponenetesInternoCentroArribaJPanel, BorderLayout.NORTH);
         
         // Se añade el panel del centro a su contenedor interno.
-        ladoCentroInterno.add(ladoCentro, BorderLayout.CENTER);
+        ladoCentroInternoJPanel.add(ladoCentroJPanel, BorderLayout.CENTER);
         
         // Adición de paneles al JFrame principal.
         // Como el panel principal utiliza BorderLayout, se pueden colocar los paneles en 
         // NORTH, EAST, SOUTH, WEST, CENTER.
-        this.add(ladoIzquierdoInterno, BorderLayout.WEST);
-        this.add(ladoCentroInterno, BorderLayout.CENTER);
+        this.add(ladoIzquierdoInternoJPanel, BorderLayout.WEST);
+        this.add(ladoCentroInternoJPanel, BorderLayout.CENTER);
         
         // Para no cambiar el tamaño (me rompe la posición de los componentes :) ).
         this.setResizable(false);
@@ -448,32 +448,15 @@ public class GUI_TEST extends JFrame implements ActionListener {
     @Override
     public void actionPerformed(ActionEvent e) {
 
-        if (e.getSource() == comenzarBuques) {
+        if (e.getSource() == comenzarBuquesJButton) {
             
             SwingUtilities.invokeLater(new Runnable() {
                 
                 @Override
                 public void run() {
-                    rutaBuques.append("Test\n");
+                    rutaBuquesJTextArea.append("Test\n");
                 }
             });
         }
     }
-    
-    /*
-    private void actualizarHilo(String text, Component component){
-        SwingUtilities.invokeLater(new Runnable(){
-            @Override
-                public void run() {
-                    if (component instanceof JTextArea){
-                        ((JTextArea) component).append(text);
-                        component.revalidate();
-                        component.repaint();
-                        System.out.println(rutaBuques.getText());
-                                }                      
-                            }
-                        }
-                    );
-                }
-*/
 }
