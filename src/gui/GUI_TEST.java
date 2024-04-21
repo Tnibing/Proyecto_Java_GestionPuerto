@@ -1,5 +1,8 @@
 package gui;
 
+import gestionRuta.Buque;
+import gestionRuta.Puerto;
+import gestionRuta.Ruta;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
@@ -9,6 +12,8 @@ import java.awt.Image;
 import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -24,13 +29,27 @@ import javax.swing.SwingUtilities;
  *
  * @author Fran <6W>
  */
-
 public class GUI_TEST extends JFrame implements ActionListener {
 
+    private Puerto p1 = new Puerto("Valencia", "España");
+    private Puerto p2 = new Puerto("Castellón", "España");
+    private Puerto p3 = new Puerto("Barcelona", "España");
+    private Puerto p4 = new Puerto("Pireo", "Grecia");
+    private Puerto p5 = new Puerto("Estambul", "Turquía");
+    private Puerto p6 = new Puerto("Yarimca", "Turquía");
+
+    private Ruta ruta1 = new Ruta("Ruta de comercio Mediterránea", p1, p2, p3, p4, p5, p6);
+    private Ruta ruta2 = new Ruta("Ruta de comercio Mediterránea", p1, p2, p3, p4, p5, p6);
+    private Ruta ruta3 = new Ruta("Ruta de comercio Mediterránea", p1, p2, p3, p4, p5, p6);
+
+    private Buque cinzia = new Buque("CINZIA A", ruta1);
+    private Buque maerskNP = new Buque("MAERSK NEWPORT", ruta2);
+    private Buque bomar = new Buque("BOMAR RESOLVE", ruta3);
+
+    private boolean enRuta = false;
+
     // Todos los componentes que se van a usar en la interfaz gráfica.
-    
     // PANEL IZQUIERDO
-    
     // Botones con listas desplegables PANEL IZQUIERDO.
     private JComboBox listaNavierasComboBox;
     private JComboBox listaPuertosOrigenComboBox;
@@ -48,29 +67,28 @@ public class GUI_TEST extends JFrame implements ActionListener {
     private JLabel seleccionPuertoOrigenJLabel;
     private JLabel seleccionPuertoDestinoJLabel;
     private JLabel seleccionNavieraJLabel;
-    
+
     // PANEL CENTRO
-    
     // Botones "click" PANEL CENTRO.
     private JButton comenzarBuquesJButton;
     private JButton pararBuquesJButton;
     private JButton infoPuertosJButton;
-    
+
     // Texto PANEL CENTRO.
     private JTextArea rutaBuquesJTextArea;
     private JTextArea infoPuertosTextoJTextArea;
     private JScrollPane scrollTextoBuquesJScrollPane;
     private JScrollPane scrollTextoPuertosJScrollPane;
-    
+
     // JLabel para imágenes PANEL CENTRO.
     private JLabel contenedorImagenCentroBuqueJLabel;
     private JLabel contenedorImagenCentroPuertoJLabel;
-    
+
     // Posicionameinto de componentes (Constraints) PANEL CENTRO
     private GridBagConstraints constraintsRutaBuquesJScrollPane;
     private GridBagConstraints constraintsComenzarBuquesJButton;
     private GridBagConstraints constraintsPararBuquesJButton;
-    private GridBagConstraints  constraintsContenedorImagenCentroBuqueJLabel;
+    private GridBagConstraints constraintsContenedorImagenCentroBuqueJLabel;
     private GridBagConstraints constraintsContenedorImagenCentroPuertoJLabel;
     private GridBagConstraints constraintsInfoPuertosJButton;
     private GridBagConstraints constraintsInfoTextoPuertosJScrollPane;
@@ -84,10 +102,10 @@ public class GUI_TEST extends JFrame implements ActionListener {
     private JPanel panelComponenetesInternoCentroAbajoJPanel;
 
     public GUI_TEST() {
-        
+
         // Cambios del JFrame (ventana principal de la aplicación).
         this.setTitle("Gestión Portuaria");
-        
+
         // Tamaño del JFrame.
         this.setSize(1400, 800);
 
@@ -107,20 +125,19 @@ public class GUI_TEST extends JFrame implements ActionListener {
         // Icono del JFrame principal.
         ImageIcon icono = new ImageIcon("buqueIcono.png");
         this.setIconImage(icono.getImage());
-        
+
         /*
         *
         *
         * PANEL IZQUIERDO
         *
         *
-        */
-        
+         */
         // Panel interno para que se vean mejor los bordes del panel izquierdo con márgenes.
         ladoIzquierdoInternoJPanel = new JPanel(new BorderLayout());
         ladoIzquierdoInternoJPanel.setBorder(BorderFactory.createEmptyBorder(20, 20, 20, 10));
         ladoIzquierdoInternoJPanel.setOpaque(false);
-        
+
         // Panel izquierdo.
         // El panel principal (JFrame) usa el BorderLayout, este panel usa
         // GridBagLayout, permite un posicionamiento más concreto de los
@@ -131,7 +148,6 @@ public class GUI_TEST extends JFrame implements ActionListener {
         ladoIzquierdoJPanel.setOpaque(false);
 
         // COMPONENTES DEL PANEL IZQUIERDO
-        
         // Crea un botón desplegable, cada elemento del botón es
         // un elemento del vector.
         String[] navieras = {"Arkas", "Maersk", "CMA"};
@@ -167,9 +183,7 @@ public class GUI_TEST extends JFrame implements ActionListener {
         // weighty -> valor mayor, prioridad, ocupa el espacio disponible. Añado el weighty = 1 al último
         // componente para que "empuje" a los demás hacia arriba, así consigo que estén
         // "anclados" en el top del panel, si no, aparecerían centrados.
-        
         // CONSTRAINTS COMPONENTES PANEL IZQUIERDO
-        
         // "Puerto de origen:" (JLabel Constraint)
         constraintsSeleccionPuertoOrigenJLabel = new GridBagConstraints();
         constraintsSeleccionPuertoOrigenJLabel.gridx = 0;
@@ -240,7 +254,7 @@ public class GUI_TEST extends JFrame implements ActionListener {
         ladoIzquierdoJPanel.add(listaPuertosDestinoComboBox, constrainsListaPuertosDestinoComboBox);
         ladoIzquierdoJPanel.add(seleccionNavieraJLabel, constraintsSeleccionNavieraJLabel);
         ladoIzquierdoJPanel.add(listaNavierasComboBox, constraintsListaNavierasComboBox);
-        
+
         ladoIzquierdoInternoJPanel.add(ladoIzquierdoJPanel, BorderLayout.CENTER);
 
         /*
@@ -249,36 +263,34 @@ public class GUI_TEST extends JFrame implements ActionListener {
         * PANEL CENTRO
         *
         *
-        */
-        
+         */
         // Panel interno para que se vean mejor los bordes y añadir margen al panel centro.
         ladoCentroInternoJPanel = new JPanel(new BorderLayout());
         ladoCentroInternoJPanel.setBorder(BorderFactory.createEmptyBorder(20, 10, 20, 20));
         ladoCentroInternoJPanel.setOpaque(false);
-        
+
         // Panel centro.
         ladoCentroJPanel = new JPanel();
         ladoCentroJPanel.setLayout(new BorderLayout());
         ladoCentroJPanel.setBackground(new Color(0x668DC0));
         ladoCentroJPanel.setBorder(new BordeRedondo(50));
         ladoCentroJPanel.setOpaque(false);
-        
+
         // COMPONENTES DEL PANEL CENTRO
-        
         // (JPanel) Panel de los componentes de abajo.
         panelComponenetesInternoCentroAbajoJPanel = new JPanel();
         panelComponenetesInternoCentroAbajoJPanel.setLayout(new GridBagLayout());
         panelComponenetesInternoCentroAbajoJPanel.setOpaque(false);
-        
+
         // (JPanel) Panel de los componentes de arriba.
         panelComponenetesInternoCentroArribaJPanel = new JPanel();
         panelComponenetesInternoCentroArribaJPanel.setLayout(new GridBagLayout());
         panelComponenetesInternoCentroArribaJPanel.setOpaque(false);
-        
+
         // (JButton) info puertos.
         infoPuertosJButton = new JButton("Mostrar información de puertos");
         infoPuertosJButton.addActionListener(this);
-        
+
         // (JTextArea) Buques.
         rutaBuquesJTextArea = new JTextArea(10, 1);
         rutaBuquesJTextArea.setEditable(false);
@@ -286,10 +298,10 @@ public class GUI_TEST extends JFrame implements ActionListener {
         rutaBuquesJTextArea.setForeground(Color.BLACK);
         rutaBuquesJTextArea.setOpaque(true);
         rutaBuquesJTextArea.setMargin(new Insets(10, 10, 10, 10));
-        
+
         // Barra de scroll para rutaBuquesJTextArea.
         scrollTextoBuquesJScrollPane = new JScrollPane(rutaBuquesJTextArea);
-        
+
         // (JButton) iniciar ruta.
         comenzarBuquesJButton = new JButton("Iniciar ruta");
         comenzarBuquesJButton.addActionListener(this);
@@ -298,7 +310,7 @@ public class GUI_TEST extends JFrame implements ActionListener {
         pararBuquesJButton = new JButton("Parar ruta");
         pararBuquesJButton.setPreferredSize(comenzarBuquesJButton.getPreferredSize());
         pararBuquesJButton.addActionListener(this);
-        
+
         // (JTextArea) Puertos.
         infoPuertosTextoJTextArea = new JTextArea(10, 1);
         infoPuertosTextoJTextArea.setEditable(false);
@@ -309,28 +321,27 @@ public class GUI_TEST extends JFrame implements ActionListener {
 
         // Barra de scroll para puertos.
         scrollTextoPuertosJScrollPane = new JScrollPane(infoPuertosTextoJTextArea);
-        
+
         // Imagen, primero se carga como ImageIcon y luego lo paso a
         // Image para poder cambiar el tamaño
         ImageIcon buqueImgIcono = new ImageIcon("buqueSim.png");
         Image buqueImgOriginal = buqueImgIcono.getImage();
         Image buqueImgEscalada = buqueImgOriginal.getScaledInstance(100, 100, Image.SCALE_SMOOTH);
         ImageIcon buqueImgFinal = new ImageIcon(buqueImgEscalada);
-        
+
         // Otra imagen
         ImageIcon puertoImgIcono = new ImageIcon("imagenPuerto.png");
         Image puertoImgOriginal = puertoImgIcono.getImage();
         Image puertoImgEscalada = puertoImgOriginal.getScaledInstance(100, 100, Image.SCALE_SMOOTH);
         ImageIcon puertoImgFinal = new ImageIcon(puertoImgEscalada);
-        
+
         // JLabel para la imagen (buque)
         contenedorImagenCentroBuqueJLabel = new JLabel(buqueImgFinal);
-        
+
         // Otro JLabel para la otra imagen (puerto)
         contenedorImagenCentroPuertoJLabel = new JLabel(puertoImgFinal);
-        
+
         // CONSTRAINTS COMPONENTES PANEL CENTRO 
-        
         // Ruta buques (JScrollPanel Constraint)
         constraintsRutaBuquesJScrollPane = new GridBagConstraints();
         constraintsRutaBuquesJScrollPane.gridx = 0;
@@ -341,7 +352,7 @@ public class GUI_TEST extends JFrame implements ActionListener {
         constraintsRutaBuquesJScrollPane.weightx = 1.0;
         constraintsRutaBuquesJScrollPane.anchor = GridBagConstraints.CENTER;
         constraintsRutaBuquesJScrollPane.insets = new Insets(5, 5, 5, 5);
-        
+
         // Info puertos (JScrollPane Constraint)
         constraintsInfoTextoPuertosJScrollPane = new GridBagConstraints();
         constraintsInfoTextoPuertosJScrollPane.gridx = 1;
@@ -353,7 +364,7 @@ public class GUI_TEST extends JFrame implements ActionListener {
         constraintsInfoTextoPuertosJScrollPane.insets = new Insets(350, 0, 0, 0);
         constraintsInfoTextoPuertosJScrollPane.weighty = 1.0;
         constraintsInfoTextoPuertosJScrollPane.weightx = 1.0;
-        
+
         // Imagen buque (ImageIcon Constraints)
         constraintsContenedorImagenCentroBuqueJLabel = new GridBagConstraints();
         constraintsContenedorImagenCentroBuqueJLabel.gridx = 1;
@@ -364,7 +375,7 @@ public class GUI_TEST extends JFrame implements ActionListener {
         constraintsContenedorImagenCentroBuqueJLabel.insets = new Insets(30, 80, 170, 5);
         constraintsContenedorImagenCentroBuqueJLabel.weighty = 0;
         constraintsContenedorImagenCentroBuqueJLabel.weightx = 0;
-        
+
         // Boton comenzar (JButton Constraint)
         constraintsComenzarBuquesJButton = new GridBagConstraints();
         constraintsComenzarBuquesJButton.gridx = 1;
@@ -374,7 +385,7 @@ public class GUI_TEST extends JFrame implements ActionListener {
         constraintsComenzarBuquesJButton.anchor = GridBagConstraints.NORTH;
         constraintsComenzarBuquesJButton.insets = new Insets(170, 80, 5, 5);
         constraintsComenzarBuquesJButton.weighty = 0;
-        
+
         // Boton parar (JButton Constraint)
         constraintsPararBuquesJButton = new GridBagConstraints();
         constraintsPararBuquesJButton.gridx = 1;
@@ -384,7 +395,7 @@ public class GUI_TEST extends JFrame implements ActionListener {
         constraintsPararBuquesJButton.anchor = GridBagConstraints.NORTH;
         constraintsPararBuquesJButton.insets = new Insets(220, 80, 5, 5);
         constraintsPararBuquesJButton.weighty = 1;
-        
+
         // Boton info puertos (JButton Constraint)
         constraintsInfoPuertosJButton = new GridBagConstraints();
         constraintsInfoPuertosJButton.gridx = 0;
@@ -395,7 +406,7 @@ public class GUI_TEST extends JFrame implements ActionListener {
         constraintsInfoPuertosJButton.insets = new Insets(520, 0, 0, 20);
         constraintsInfoPuertosJButton.weighty = 1;
         constraintsInfoPuertosJButton.weightx = 0;
-        
+
         // Imagen Puerto (ImageIcon Constraints)
         constraintsContenedorImagenCentroPuertoJLabel = new GridBagConstraints();
         constraintsContenedorImagenCentroPuertoJLabel.gridx = 0;
@@ -406,41 +417,41 @@ public class GUI_TEST extends JFrame implements ActionListener {
         constraintsContenedorImagenCentroPuertoJLabel.insets = new Insets(380, 45, 140, 750);
         constraintsContenedorImagenCentroPuertoJLabel.weighty = 0;
         constraintsContenedorImagenCentroPuertoJLabel.weightx = 0;
-        
+
         // Adición de componentes al panel de centro-abajo
         panelComponenetesInternoCentroAbajoJPanel.add(contenedorImagenCentroPuertoJLabel, constraintsContenedorImagenCentroPuertoJLabel);
         panelComponenetesInternoCentroAbajoJPanel.add(scrollTextoPuertosJScrollPane, constraintsInfoTextoPuertosJScrollPane);
         panelComponenetesInternoCentroAbajoJPanel.add(infoPuertosJButton, constraintsInfoPuertosJButton);
-        
+
         // Adición de componentes al panel de centro-arriba
         panelComponenetesInternoCentroArribaJPanel.add(scrollTextoBuquesJScrollPane, constraintsRutaBuquesJScrollPane);
         panelComponenetesInternoCentroArribaJPanel.add(contenedorImagenCentroBuqueJLabel, constraintsContenedorImagenCentroBuqueJLabel);
         panelComponenetesInternoCentroArribaJPanel.add(comenzarBuquesJButton, constraintsComenzarBuquesJButton);
         panelComponenetesInternoCentroArribaJPanel.add(pararBuquesJButton, constraintsPararBuquesJButton);
-        
+
         panelComponenetesInternoCentroArribaJPanel.setVisible(true);
-        
+
         // Se añade el panel de componentes al del centro
         ladoCentroJPanel.add(panelComponenetesInternoCentroAbajoJPanel, BorderLayout.SOUTH);
         ladoCentroJPanel.add(panelComponenetesInternoCentroArribaJPanel, BorderLayout.NORTH);
-        
+
         // Se añade el panel del centro a su contenedor interno.
         ladoCentroInternoJPanel.add(ladoCentroJPanel, BorderLayout.CENTER);
-        
+
         // Adición de paneles al JFrame principal.
         // Como el panel principal utiliza BorderLayout, se pueden colocar los paneles en 
         // NORTH, EAST, SOUTH, WEST, CENTER.
         this.add(ladoIzquierdoInternoJPanel, BorderLayout.WEST);
         this.add(ladoCentroInternoJPanel, BorderLayout.CENTER);
-        
+
         // Para no cambiar el tamaño (me rompe la posición de los componentes :) ).
         this.setResizable(false);
-        
+
         // Para que al comenzar la aplicación, el JFrame principal
         // aparezca en el centro de la pantalla. Sin esto, aparecería
         // arriba a la izquierda.
         this.setLocationRelativeTo(null);
-        
+
         // Sin esto, no se vería el JFrame al iniciar la aplicación.
         this.setVisible(true);
     }
@@ -449,35 +460,65 @@ public class GUI_TEST extends JFrame implements ActionListener {
     public void actionPerformed(ActionEvent e) {
 
         if (e.getSource() == comenzarBuquesJButton) {
-            
+
             SwingUtilities.invokeLater(new Runnable() {
-                
+
                 @Override
                 public void run() {
-                    rutaBuquesJTextArea.append("Test botón iniciar ruta\n");
+
+                    Thread hiloRuta = new Thread(new Runnable() {
+
+                        @Override
+                        public void run() {
+
+                            enRuta = true;
+
+                            while (enRuta) {
+                                rutaBuquesJTextArea.append("Los buques han iniciado la ruta...\n");
+
+                                try {
+                                    Thread.sleep(1000);
+                                } catch (InterruptedException ex) {
+                                    Logger.getLogger(GUI_TEST.class.getName()).log(Level.SEVERE, null, ex);
+                                }
+                            }
+                        }
+                    });
+                    
+                    hiloRuta.start();
                 }
             });
         }
-        
+
         if (e.getSource() == pararBuquesJButton) {
-            
+
             SwingUtilities.invokeLater(new Runnable() {
-                
+
                 @Override
                 public void run() {
-                    rutaBuquesJTextArea.append("Test botón parar ruta\n");
-                    System.out.println("Parar ruta boton clickado");
+                    
+                    if (!enRuta)
+                        rutaBuquesJTextArea.append("¡No hay buques en ruta!\n");
+                    
+                    else {
+                        
+                        enRuta = false;
+
+                        rutaBuquesJTextArea.append("Los buques han detenido la ruta...\n");
+                    }
                 }
             });
         }
-        
+
         if (e.getSource() == infoPuertosJButton) {
-            
+
             SwingUtilities.invokeLater(new Runnable() {
-                
+
                 @Override
                 public void run() {
-                    infoPuertosTextoJTextArea.append("Test boton mostrar info puertos\n");
+
+                    infoPuertosTextoJTextArea.append("Test botón info puertos\n");
+
                 }
             });
         }

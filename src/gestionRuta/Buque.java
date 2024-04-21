@@ -1,8 +1,8 @@
 package gestionRuta;
 
+import agentes.Naviera;
 import gestionCarga.Contenedor;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -17,23 +17,37 @@ public class Buque {
     private String nombreBuque;
     private Ruta ruta;
     private int capacidadContenedores;
-    private List<Contenedor> contenedores;
-    private Puerto puertoActual;
+    private List<Contenedor> contenedoresCargados;
+    private Puerto puertoInicial;
+    private Naviera navi;
     
     public Buque(String n, Ruta r) {
         nombreBuque = n;
         ruta = r;
         capacidadContenedores = 1600;
-        contenedores = new ArrayList<>();
+        contenedoresCargados = new ArrayList<>();
         
-        if (nombreBuque.equalsIgnoreCase("CINZIA A"))
-            puertoActual = new Puerto("Yarimca", "Turquía");
+        if (nombreBuque.equalsIgnoreCase("CINZIA A")) {
+            
+            puertoInicial = new Puerto("Yarimca", "Turquía");
+            
+            navi = new Naviera("ARKAS");
+        }
         
-        else if (nombreBuque.equalsIgnoreCase("MAERSK NEWPORT"))
-            puertoActual = new Puerto("Valencia", "España");
+        else if (nombreBuque.equalsIgnoreCase("MAERSK NEWPORT")) {
+            
+            puertoInicial = new Puerto("Valencia", "España");
+            
+            navi = new Naviera("MAERSK");
+
+        }
         
-        else if (nombreBuque.equalsIgnoreCase("BOMAR RESOLVE"))
-            puertoActual = new Puerto("Pireo", "Grecia");
+        else if (nombreBuque.equalsIgnoreCase("BOMAR RESOLVE")) {
+            
+            puertoInicial = new Puerto("Pireo", "Grecia");
+
+            navi = new Naviera("CMA");
+        }
     }
     
     public String getNombre() {
@@ -49,17 +63,28 @@ public class Buque {
     }
     
     public List<Contenedor> getContenedores() {
-        return contenedores;
+        return contenedoresCargados;
+    }
+    
+    public String getNombreNaviera() {
+        return navi.toString();
     }
     
     // El spread operator en el parámetro devuelve un array del mismo tipo (Contenedor[])
     // de n número de elementos
     public void addContenedor(Contenedor ... c) {
-        contenedores.addAll(Arrays.asList(c));
+        
+        for (Contenedor conte : c) {
+            
+            if(contenedoresCargados.size() < capacidadContenedores)
+                contenedoresCargados.add(conte);
+            
+        }
+        
     }
     
     public Puerto getPuertoActual() {
-        return puertoActual;
+        return puertoInicial;
     }
     
     public void llegarAPuerto(Puerto p) {
@@ -81,9 +106,9 @@ public class Buque {
         } finally {
             System.out.println("Buque " + getNombre() + " asegurado, listo para carga/descarga de contenedores.");
             
-            puertoActual = p;
+            puertoInicial = p;
             
-            System.out.println("Puerto actual: " + puertoActual.getNombre());
+            System.out.println("Puerto actual: " + puertoInicial.getNombre());
         }
     }
     
@@ -101,12 +126,12 @@ public class Buque {
     public String toString() {
         StringBuilder listaCont =  new StringBuilder();
         
-        contenedores.forEach(e -> listaCont.append(e).append("\n"));
+        contenedoresCargados.forEach(e -> listaCont.append(e).append("\n"));
         
         String res = "Nombre del buque: " + getNombre() + 
                              "\nRUTA\n" + getRuta().toString() + 
                              "\nCapacidad total de contenedores: " + getCapacidad() + 
-                             "\nPuerto actual: " + puertoActual.toString() + 
+                             "\nPuerto actual: " + puertoInicial.toString() + 
                              "\nCONTENEDORES A BORDO\n" + listaCont.toString();
         
         return res;

@@ -32,9 +32,6 @@ public class Main {
 
         rutaMediterraneo.addPuerto(p1, p2, p3, p4, p5, p6);
         
-        nav1.addBuque(buque1);
-        nav2.addBuque(buque2);
-        nav3.addBuque(buque3);
         
         new GUI_TEST();
         

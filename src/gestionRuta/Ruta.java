@@ -14,9 +14,14 @@ public class Ruta {
     private String nombreRuta;
     private List<Puerto> puertos;
     
-    public Ruta(String n) {
+    public Ruta(String n, Puerto ... p) {
         nombreRuta = n;
         puertos = new ArrayList<>();
+        
+        for (Puerto puertoVector : p) {
+            puertos.add(puertoVector);
+        }
+        
     }
     
     public String getNombre() {
