@@ -451,7 +451,7 @@ public class GUI_TEST extends JFrame implements ActionListener {
         // aparezca en el centro de la pantalla. Sin esto, aparecería
         // arriba a la izquierda.
         this.setLocationRelativeTo(null);
-
+        
         // Sin esto, no se vería el JFrame al iniciar la aplicación.
         this.setVisible(true);
     }
@@ -474,7 +474,7 @@ public class GUI_TEST extends JFrame implements ActionListener {
                             enRuta = true;
 
                             while (enRuta) {
-                                rutaBuquesJTextArea.append("Los buques han iniciado la ruta...\n");
+                                rutaBuquesJTextArea.append("Ruta COMENZADA...\n");
 
                                 try {
                                     Thread.sleep(1000);
@@ -484,7 +484,7 @@ public class GUI_TEST extends JFrame implements ActionListener {
                             }
                         }
                     });
-                    
+
                     hiloRuta.start();
                 }
             });
@@ -496,15 +496,14 @@ public class GUI_TEST extends JFrame implements ActionListener {
 
                 @Override
                 public void run() {
-                    
-                    if (!enRuta)
+
+                    if (!enRuta) {
                         rutaBuquesJTextArea.append("¡No hay buques en ruta!\n");
-                    
-                    else {
-                        
+                    } else {
+
                         enRuta = false;
 
-                        rutaBuquesJTextArea.append("Los buques han detenido la ruta...\n");
+                        rutaBuquesJTextArea.append("Ruta DETENIDA...\n");
                     }
                 }
             });
