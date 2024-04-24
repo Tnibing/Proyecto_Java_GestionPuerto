@@ -1,5 +1,7 @@
 package gestionRuta;
 
+import agentes.Buque;
+
 /**
  *
  * @author Fran <6W>

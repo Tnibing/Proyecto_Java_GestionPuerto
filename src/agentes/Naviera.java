@@ -20,8 +20,6 @@ public class Naviera {
     @Override
     public String toString() {
         
-        String res = "Nombre de la naviera: " + getNombre() + "\n";
-        
-        return res;
+        return getNombre();
     }
 }

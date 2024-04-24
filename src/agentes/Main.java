@@ -1,6 +1,6 @@
 package agentes;
 
-import gui.GUI_TEST;
+import gui.GUI;
 
 /**
  *
@@ -10,6 +10,6 @@ import gui.GUI_TEST;
 public class Main {
     public static void main(String[] args) {
         
-        new GUI_TEST();
+        new GUI();
     }
 }
