@@ -2,8 +2,6 @@ package controladoresEventos;
 
 import agentes.Buque;
 import cargas.Contenedor;
-import rutas.Puerto;
-import rutas.Ruta;
 import gui.GUI;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
@@ -11,6 +9,7 @@ import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JTextArea;
+import rutas.Puerto;
 
 /**
  *
@@ -19,18 +18,9 @@ import javax.swing.JTextArea;
 public class EventoBotonComenzarPararRuta implements ActionListener {
 
     // Datos
-    private Puerto p1 = new Puerto("Valencia", "España");
-    private Puerto p2 = new Puerto("Castellón", "España");
-    private Puerto p3 = new Puerto("Barcelona", "España");
-    private Puerto p4 = new Puerto("Pireo", "Grecia");
-    private Puerto p5 = new Puerto("Estambul", "Turquía");
-    private Puerto p6 = new Puerto("Yarimca", "Turquía");
-
-    private Ruta ruta = new Ruta("Ruta de comercio Mediterránea", p1, p2, p3, p4, p5, p6);
-
-    private Buque cinzia = new Buque("CINZIA A", ruta);
-    private Buque maerskNP = new Buque("MAERSK NEWPORT", ruta);
-    private Buque bomar = new Buque("BOMAR RESOLVE", ruta);
+    private Buque cinzia;
+    private Buque maerskNP;
+    private Buque bomar;
 
     private JTextArea texto;
     private Boolean enRuta = false;
@@ -41,73 +31,89 @@ public class EventoBotonComenzarPararRuta implements ActionListener {
     private Thread HiloBuqueCMA;
 
     // El JTextArea que se va a modificar se pasa como parámetro del constructor
-    public EventoBotonComenzarPararRuta(JTextArea texto) {
+    public EventoBotonComenzarPararRuta(JTextArea texto, Buque cinzia, Buque maerskNP, Buque bomar) {
         this.texto = texto;
+        this.cinzia = cinzia;
+        this.maerskNP = maerskNP;
+        this.bomar = bomar;
     }
 
     @Override
     public void actionPerformed(ActionEvent e) {
 
-        // Si los buques NO están en ruta
-        if (!enRuta) {
+        // Hilo que maneja los hilos de los buques para que la interfaz gráfica
+        // no se quede colgada al parar la ruta. Cuando se para la ruta, se espera
+        // a que los 3 hilos de los barcos acaben su iteración actual
+        Thread HiloGeneralBuques = new Thread(() -> {
 
-            // bucle del buque de Arkas
-            HiloBuqueArkas = new Thread(new Runnable() {
+            // Si los buques NO están en ruta
+            if (!enRuta) {
 
-                @Override
-                public void run() {
+                // bucle del buque de Arkas
+                HiloBuqueArkas = new Thread(new Runnable() {
 
-                    enRuta = true;
+                    @Override
+                    public void run() {
 
-                    gestionBuques(cinzia, 1000);
+                        enRuta = true;
 
-                }
-            });
+                        gestionBuques(cinzia, 1000);
 
-            // bucle del buque de Maersk
-            HiloBuqueMaersk = new Thread(() -> {
+                    }
+                });
 
-                enRuta = true;
-
-                gestionBuques(maerskNP, 2600);
-
-            });
-
-            // bucle del buque de CMA
-            HiloBuqueCMA = new Thread(new Runnable() {
-
-                @Override
-                public void run() {
+                // bucle del buque de Maersk
+                // usando lambda expression por practicar
+                HiloBuqueMaersk = new Thread(() -> {
 
                     enRuta = true;
 
-                    gestionBuques(bomar, 5300);
+                    gestionBuques(maerskNP, 2600);
 
+                });
+
+                // bucle del buque de CMA
+                HiloBuqueCMA = new Thread(new Runnable() {
+
+                    @Override
+                    public void run() {
+
+                        enRuta = true;
+
+                        gestionBuques(bomar, 5300);
+
+                    }
+                });
+
+                // Se inician los 3 hilos
+                HiloBuqueArkas.start();
+                HiloBuqueMaersk.start();
+                HiloBuqueCMA.start();
+
+            } else {
+
+                // Si los buques ya están de ruta, boolean a false para que paren
+                enRuta = false;
+
+                // Se espera a que todos los hilos acaben la ejecución de la iteración actual
+                try {
+                    HiloBuqueArkas.join();
+                    HiloBuqueMaersk.join();
+                    HiloBuqueCMA.join();
+                } catch (InterruptedException ex) {
+                    Logger.getLogger(EventoBotonComenzarPararRuta.class.getName()).log(Level.SEVERE, null, ex);
                 }
-            });
 
-            // Se inician los 3 hilos
-            HiloBuqueArkas.start();
-            HiloBuqueMaersk.start();
-            HiloBuqueCMA.start();
+                // Se informa en la interfaz gráfica de que ha ruta ha sido detenida
+                texto.append("\nRuta DETENIDA...\n\n");
 
-        } else {
-
-            // Si los buques ya están de ruta, boolean a false para que paren
-            enRuta = false;
-
-            // Se espera a que todos los hilos acaben la ejecución de la iteración actual
-            try {
-                HiloBuqueArkas.join();
-                HiloBuqueMaersk.join();
-                HiloBuqueCMA.join();
-            } catch (InterruptedException ex) {
-                Logger.getLogger(EventoBotonComenzarPararRuta.class.getName()).log(Level.SEVERE, null, ex);
+                // Para que el scroll siga al texto y no se quede arriba
+                texto.setCaretPosition(texto.getDocument().getLength());
             }
 
-            // Se informa en la interfaz gráfica de que ha ruta ha sido detenida
-            texto.append("\nRuta DETENIDA...\n");
-        }
+        });
+
+        HiloGeneralBuques.start();
     }
 
     private void gestionBuques(Buque b, int esperar) {
@@ -146,27 +152,38 @@ public class EventoBotonComenzarPararRuta implements ActionListener {
 
             for (Contenedor c : contenedores) {
 
-                if (c.getNaviera().getNombre().equals(b.getNombreNaviera()) && b.getContenedores().size() < b.getCapacidad()) {
+                if (c.getNaviera().getNombre().equals(b.getNombreNaviera()) && b.getContenedores().size() < b.getCapacidad() && !c.getDestino().toString().equals(b.getPuertoActual().toString())) {
                     b.addContenedor(c);
                     b.getPuertoActual().cargarContenedores(c);
                 }
 
             }
 
+            // Saco el índice del puerto actual, a partir de ese índice, saco cuál sería el siguiente puerto de la lista
             int puertoActual = b.getRuta().getPuertos().indexOf(b.getPuertoActual());
             int puertoDestino;
 
+            // Si el índice del puerto actual no es el último, se le suma 1 al índice para sacar el siguiente
             if (puertoActual < b.getRuta().getPuertos().size() - 1) {
                 puertoDestino = puertoActual + 1;
+
+                // Si no, quiere decir que el puerto actual es el último de la lista, tiene que volver al índice 0
             } else {
                 puertoDestino = 0;
             }
+            
+            Puerto puerto = b.getPuertoActual();
+            Puerto siguientePuerto = b.getRuta().getPuertos().get(puertoDestino);
+            
+            b.setPuertoActual(siguientePuerto);
 
-            texto.append("El buque " + b.getNombre() + " ha CARGADO " + b.getContenedores().size() + " contenedores en el puerto de " + b.getPuertoActual().getNombre() + ".\n"
-                    + "Siguiente destino:\n" + b.getRuta().getPuertos().get(puertoDestino).toString() + "\n");
+            texto.append("El buque " + b.getNombre() + " ha CARGADO " + b.getContenedores().size() + " contenedores en el puerto de " + puerto.getNombre() + ".\n"
+                    + "Siguiente destino:\n" + siguientePuerto.infoPuerto() + "\n");
 
-            cinzia.setPuertoActual(b.getRuta().getPuertos().get(puertoDestino));
             // Fin carga contenedores
+
+            // Para que el scroll siga al texto y no se quede arriba
+            texto.setCaretPosition(texto.getDocument().getLength());
         }
     }
 }

@@ -1,6 +1,5 @@
 package rutas;
 
-import agentes.Buque;
 import cargas.Contenedor;
 import java.util.ArrayList;
 import java.util.List;
@@ -54,6 +53,12 @@ public class Puerto {
     
     @Override
     public String toString() {
+        String res = "Nombre del puerto: " + getNombre() + "\nPaís: " + getPais() +  "\nNombre de carga: " + getNombreDeCarga() + "\nNúmero de contenedores: " + contenedores.size() + "\n";
+        
+        return res;
+    }
+    
+    public String infoPuerto() {
         String res = "Nombre del puerto: " + getNombre() + "\nPaís: " + getPais() +  "\nNombre de carga: " + getNombreDeCarga() + "\n";
         
         return res;

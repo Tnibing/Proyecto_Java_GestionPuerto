@@ -1,5 +1,6 @@
 package gui;
 
+import agentes.Buque;
 import controladoresEventos.EventoBotonComenzarPararRuta;
 import controladoresEventos.EventoBotonLimpiarPantalla;
 import controladoresEventos.EventoMostrarInfoPuertos;
@@ -19,6 +20,8 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
+import rutas.Puerto;
+import rutas.Ruta;
 
 /**
  *
@@ -26,7 +29,20 @@ import javax.swing.JTextArea;
  */
 
 public class GUI extends JFrame {
+    
+    // Datos que maneja la interfaz gráfica
+    private Puerto p1 = new Puerto("Valencia", "España");
+    private Puerto p2 = new Puerto("Castellón", "España");
+    private Puerto p3 = new Puerto("Barcelona", "España");
+    private Puerto p4 = new Puerto("Pireo", "Grecia");
+    private Puerto p5 = new Puerto("Estambul", "Turquía");
+    private Puerto p6 = new Puerto("Yarimca", "Turquía");
 
+    private Ruta ruta = new Ruta("Ruta de comercio Mediterránea", p1, p2, p3, p4, p5, p6);
+
+    private Buque cinzia = new Buque("CINZIA A", ruta);
+    private Buque maerskNP = new Buque("MAERSK NEWPORT", ruta);
+    private Buque bomar = new Buque("BOMAR RESOLVE", ruta);
 
     // Todos los componentes que se van a usar en la interfaz gráfica.
     
@@ -285,7 +301,7 @@ public class GUI extends JFrame {
 
         // (JButton) iniciar / parar ruta.
         comenzarPararBuquesJButton = new JButton("Iniciar / Parar ruta");
-        comenzarPararBuquesJButton.addActionListener(new EventoBotonComenzarPararRuta(rutaBuquesJTextArea));
+        comenzarPararBuquesJButton.addActionListener(new EventoBotonComenzarPararRuta(rutaBuquesJTextArea, cinzia, maerskNP, bomar));
 
         // (JButton) parar ruta.
         limpiarPantallaBuquesJButton = new JButton("Limpiar pantalla");
@@ -302,7 +318,7 @@ public class GUI extends JFrame {
 
         // (JButton) info puertos.
         infoPuertosJButton = new JButton("Mostrar información de puertos");
-        infoPuertosJButton.addActionListener(new EventoMostrarInfoPuertos(infoPuertosTextoJTextArea));
+        infoPuertosJButton.addActionListener(new EventoMostrarInfoPuertos(infoPuertosTextoJTextArea, ruta));
 
         // (JButton) para limpiar la pantalla de la información de los puertos
         limpiarPantallaInfoPuertosJButton = new JButton("Limpiar pantalla");
@@ -449,7 +465,7 @@ public class GUI extends JFrame {
         this.add(ladoCentroInternoJPanel, BorderLayout.CENTER);
 
         // Para no cambiar el tamaño (me rompe la posición de los componentes :) ).
-        this.setResizable(true);
+        this.setResizable(false);
 
         // Para que al comenzar la aplicación, el JFrame principal
         // aparezca en el centro de la pantalla. Sin esto, aparecería

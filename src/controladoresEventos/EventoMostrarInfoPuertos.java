@@ -3,6 +3,8 @@ package controladoresEventos;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import javax.swing.JTextArea;
+import rutas.Puerto;
+import rutas.Ruta;
 
 /**
  *
@@ -12,15 +14,21 @@ import javax.swing.JTextArea;
 public class EventoMostrarInfoPuertos implements ActionListener {
     
     private JTextArea texto;
+    private Ruta ruta;
     
-    public EventoMostrarInfoPuertos(JTextArea texto) {
+    public EventoMostrarInfoPuertos(JTextArea texto, Ruta ruta) {
         this.texto = texto;
+        this.ruta = ruta;
     }
 
     @Override
     public void actionPerformed(ActionEvent e) {
         
-        texto.append("Test botón info puertos\n");
+        for (Puerto p : ruta.getPuertos()) {
+            texto.append(p.toString() + "\n");
+        }
+        
+        texto.setCaretPosition(texto.getDocument().getLength());
         
     }
     

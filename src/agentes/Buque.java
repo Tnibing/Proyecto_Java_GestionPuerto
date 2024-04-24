@@ -1,6 +1,5 @@
 package agentes;
 
-import agentes.Naviera;
 import cargas.Contenedor;
 import rutas.Puerto;
 import rutas.Ruta;
