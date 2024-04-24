@@ -19,10 +19,10 @@ import javax.swing.JComboBox;
 import javax.swing.JFormattedTextField;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
-import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
+import javax.swing.JTextField;
 import javax.swing.text.NumberFormatter;
 import rutas.Puerto;
 import rutas.Ruta;
@@ -53,17 +53,22 @@ public class GUI extends JFrame {
     // Todos los componentes que se van a usar en la interfaz gráfica.
     
     // PANEL IZQUIERDO
+    
     // Botones con listas desplegables PANEL IZQUIERDO.
     private JComboBox listaNavierasComboBox;
     private JComboBox listaPuertosOrigenComboBox;
     private JComboBox listaPuertosDestinoComboBox;
     
     //Botones PANEL IZQUIERDO
-    private JButton botonAddContenedores;
+    private JButton botonAddContenedoresJButton;
+    private JButton botonGenerarArchivoJButton;
     
-    // Inserción de texto y formateo PANEL IZQUIERDO
+    // Inserción de texto y formateo (solo acepta números) PANEL IZQUIERDO
     private JFormattedTextField numeroDeContenedoresJFormattedTextField;
     private NumberFormatter formateadorJFormattedTextField;
+    
+    // Inserción de texto para strings PANEL IZQUIERDO
+    private JTextField nombreDeArchivoGeneradoJTextField;
     
     // Posicionamiento de componentes (Constraints) PANEL IZQUIERDO.
     private GridBagConstraints constrainsListaPuertosOrigenComboBox;
@@ -73,12 +78,18 @@ public class GUI extends JFrame {
     private GridBagConstraints constraintsListaNavierasComboBox;
     private GridBagConstraints constraintsSeleccionPuertoDestinoJLabel;
     private GridBagConstraints constraintsAddContenedoresJFormattedTextField;
-    private GridBagConstraints constraintsBotonAddContenedores;
+    private GridBagConstraints constraintsBotonAddContenedoresJButton;
+    private GridBagConstraints constraintsNumeroDeContenedoresJLabel;
+    private GridBagConstraints constraintsInputNombreArchivoRegistroJLabel;
+    private GridBagConstraints constraintsNombreDeArchivoGeneradoJTextField;
+    private GridBagConstraints constraintsBotonGenerarArchivoJButton;
 
     // Texto PANEL IZQUIERDO.
     private JLabel seleccionPuertoOrigenJLabel;
     private JLabel seleccionPuertoDestinoJLabel;
     private JLabel seleccionNavieraJLabel;
+    private JLabel numeroDeContenedoresJLabel;
+    private JLabel inputNombreArchivoRegistroJLabel;
     
     // PANEL CENTRO
     
@@ -107,7 +118,6 @@ public class GUI extends JFrame {
     private GridBagConstraints constraintsInfoPuertosJButton;
     private GridBagConstraints constraintsInfoTextoPuertosJScrollPane;
     private GridBagConstraints constraintsLimpiarPantallaInfoPuertosJButton;
-
 
     // PANELES.
     private JPanel ladoIzquierdoInternoJPanel;
@@ -193,6 +203,16 @@ public class GUI extends JFrame {
         seleccionNavieraJLabel = new JLabel();
         seleccionNavieraJLabel.setText("Naviera:");
         seleccionNavieraJLabel.setForeground(Color.WHITE);
+        
+        // (JLabel)
+        numeroDeContenedoresJLabel = new JLabel();
+        numeroDeContenedoresJLabel.setText("Número de contenedores:");
+        numeroDeContenedoresJLabel.setForeground(Color.WHITE);
+        
+        // (JLabel)
+        inputNombreArchivoRegistroJLabel = new JLabel();
+        inputNombreArchivoRegistroJLabel.setText("Nombre del archivo:");
+        inputNombreArchivoRegistroJLabel.setForeground(Color.WHITE);
 
         // Formateo para que solo acepte enteros el JFormattedTextField
         formateadorJFormattedTextField = new NumberFormatter();
@@ -200,22 +220,32 @@ public class GUI extends JFrame {
         formateadorJFormattedTextField.setMinimum(0);
         formateadorJFormattedTextField.setAllowsInvalid(false);
         
-        // (JFormattedTextField) para la selección del número de contenedores que añadir
-        numeroDeContenedoresJFormattedTextField = new JFormattedTextField(formateadorJFormattedTextField);
-        numeroDeContenedoresJFormattedTextField.setPreferredSize(listaNavierasComboBox.getPreferredSize());
-        
         // (JButton) botón para añadir contenedores
-        botonAddContenedores = new JButton("Añadir contenedores");
-        botonAddContenedores.addActionListener(new EventoBotonAddContenedor(listaPuertosOrigenComboBox, listaPuertosDestinoComboBox, 
+        botonAddContenedoresJButton = new JButton("Añadir contenedores");
+        botonAddContenedoresJButton.addActionListener(new EventoBotonAddContenedor(listaPuertosOrigenComboBox, listaPuertosDestinoComboBox, 
                                                                                                                                            listaNavierasComboBox, numeroDeContenedoresJFormattedTextField, 
                                                                                                                                            p1, p2, p3, p4, p5, p6));
+
+        // (JFormattedTextField) para la selección del número de contenedores que añadir
+        numeroDeContenedoresJFormattedTextField = new JFormattedTextField(formateadorJFormattedTextField);
+        numeroDeContenedoresJFormattedTextField.setPreferredSize(botonAddContenedoresJButton.getPreferredSize());
+        
+        // (JTextField) inserción del nombre del archivo que se va a generar
+        nombreDeArchivoGeneradoJTextField = new JTextField();
+        nombreDeArchivoGeneradoJTextField.setPreferredSize(botonAddContenedoresJButton.getPreferredSize());
+        
+        // (JButton) botón para generar archivo
+        botonGenerarArchivoJButton = new JButton("Generar vitácora");
+        botonGenerarArchivoJButton.setPreferredSize(botonAddContenedoresJButton.getPreferredSize());
         
         // En los constraints, gridx = 0 -> primera columna, gridy modifica la fila.
         // Los componentes se colocan todos en la misma columna pero diferente fila.
         // weighty -> valor mayor, prioridad, ocupa el espacio disponible. Añado el weighty = 1 al último
         // componente para que "empuje" a los demás hacia arriba, así consigo que estén
         // "anclados" en el top del panel, si no, aparecerían centrados.
+        
         // CONSTRAINTS COMPONENTES PANEL IZQUIERDO
+        
         // "Puerto de origen:" (JLabel Constraint)
         constraintsSeleccionPuertoOrigenJLabel = new GridBagConstraints();
         constraintsSeleccionPuertoOrigenJLabel.gridx = 0;
@@ -275,12 +305,23 @@ public class GUI extends JFrame {
         constraintsListaNavierasComboBox.anchor = GridBagConstraints.NORTH;
         constraintsListaNavierasComboBox.insets = new Insets(5, 5, 5, 5);
         constraintsListaNavierasComboBox.weighty = 0;
+        
+        // "Número de contenedores" (JLabelConstraint)
+        constraintsNumeroDeContenedoresJLabel = new GridBagConstraints();
+        constraintsNumeroDeContenedoresJLabel = new GridBagConstraints();
+        constraintsNumeroDeContenedoresJLabel.gridx = 0;
+        constraintsNumeroDeContenedoresJLabel.gridy = 6;
+        constraintsNumeroDeContenedoresJLabel.gridwidth = 1;
+        constraintsNumeroDeContenedoresJLabel.gridheight = 1;
+        constraintsNumeroDeContenedoresJLabel.anchor = GridBagConstraints.NORTH;
+        constraintsNumeroDeContenedoresJLabel.insets = new Insets(50, 5, 5, 5);
+        constraintsNumeroDeContenedoresJLabel.weighty = 0;
 
         // Área de texto para el número de contenedores (JFormattedTextField Constraint)
         constraintsAddContenedoresJFormattedTextField = new GridBagConstraints();
         constraintsAddContenedoresJFormattedTextField = new GridBagConstraints();
         constraintsAddContenedoresJFormattedTextField.gridx = 0;
-        constraintsAddContenedoresJFormattedTextField.gridy = 6;
+        constraintsAddContenedoresJFormattedTextField.gridy = 7;
         constraintsAddContenedoresJFormattedTextField.gridwidth = 1;
         constraintsAddContenedoresJFormattedTextField.gridheight = 1;
         constraintsAddContenedoresJFormattedTextField.anchor = GridBagConstraints.NORTH;
@@ -288,15 +329,48 @@ public class GUI extends JFrame {
         constraintsAddContenedoresJFormattedTextField.weighty = 0;
 
         // Botón para añadir contenedores (JButton Constraint)
-        constraintsBotonAddContenedores = new GridBagConstraints();
-        constraintsBotonAddContenedores = new GridBagConstraints();
-        constraintsBotonAddContenedores.gridx = 0;
-        constraintsBotonAddContenedores.gridy = 7;
-        constraintsBotonAddContenedores.gridwidth = 1;
-        constraintsBotonAddContenedores.gridheight = 1;
-        constraintsBotonAddContenedores.anchor = GridBagConstraints.NORTH;
-        constraintsBotonAddContenedores.insets = new Insets(5, 5, 5, 5);
-        constraintsBotonAddContenedores.weighty = 1;
+        constraintsBotonAddContenedoresJButton = new GridBagConstraints();
+        constraintsBotonAddContenedoresJButton = new GridBagConstraints();
+        constraintsBotonAddContenedoresJButton.gridx = 0;
+        constraintsBotonAddContenedoresJButton.gridy = 8;
+        constraintsBotonAddContenedoresJButton.gridwidth = 1;
+        constraintsBotonAddContenedoresJButton.gridheight = 1;
+        constraintsBotonAddContenedoresJButton.anchor = GridBagConstraints.NORTH;
+        constraintsBotonAddContenedoresJButton.insets = new Insets(5, 5, 5, 5);
+        constraintsBotonAddContenedoresJButton.weighty = 0;
+        
+        // JLabel indicando nombre del archivo (JLabel Constraint)
+        constraintsInputNombreArchivoRegistroJLabel = new GridBagConstraints();
+        constraintsInputNombreArchivoRegistroJLabel = new GridBagConstraints();
+        constraintsInputNombreArchivoRegistroJLabel.gridx = 0;
+        constraintsInputNombreArchivoRegistroJLabel.gridy = 9;
+        constraintsInputNombreArchivoRegistroJLabel.gridwidth = 1;
+        constraintsInputNombreArchivoRegistroJLabel.gridheight = 1;
+        constraintsInputNombreArchivoRegistroJLabel.anchor = GridBagConstraints.NORTH;
+        constraintsInputNombreArchivoRegistroJLabel.insets = new Insets(50, 5, 5, 5);
+        constraintsInputNombreArchivoRegistroJLabel.weighty = 0;
+        
+        // Campo para que el usuario ponga el nombre del archivo (JTextField Constraint)
+        constraintsNombreDeArchivoGeneradoJTextField = new GridBagConstraints();
+        constraintsNombreDeArchivoGeneradoJTextField = new GridBagConstraints();
+        constraintsNombreDeArchivoGeneradoJTextField.gridx = 0;
+        constraintsNombreDeArchivoGeneradoJTextField.gridy = 10;
+        constraintsNombreDeArchivoGeneradoJTextField.gridwidth = 1;
+        constraintsNombreDeArchivoGeneradoJTextField.gridheight = 1;
+        constraintsNombreDeArchivoGeneradoJTextField.anchor = GridBagConstraints.NORTH;
+        constraintsNombreDeArchivoGeneradoJTextField.insets = new Insets(5, 5, 5, 5);
+        constraintsNombreDeArchivoGeneradoJTextField.weighty = 0;
+        
+        // Contraints del botón para generar arhivos (JButton Constraint)
+        constraintsBotonGenerarArchivoJButton = new GridBagConstraints();
+        constraintsBotonGenerarArchivoJButton = new GridBagConstraints();
+        constraintsBotonGenerarArchivoJButton.gridx = 0;
+        constraintsBotonGenerarArchivoJButton.gridy = 11;
+        constraintsBotonGenerarArchivoJButton.gridwidth = 1;
+        constraintsBotonGenerarArchivoJButton.gridheight = 1;
+        constraintsBotonGenerarArchivoJButton.anchor = GridBagConstraints.NORTH;
+        constraintsBotonGenerarArchivoJButton.insets = new Insets(5, 5, 5, 5);
+        constraintsBotonGenerarArchivoJButton.weighty = 1;
 
         // Adición de componentes al panel izquierdo (los componentes que le correspondan
         // con sus respectivos constraints).
@@ -308,8 +382,12 @@ public class GUI extends JFrame {
         ladoIzquierdoJPanel.add(listaPuertosDestinoComboBox, constrainsListaPuertosDestinoComboBox);
         ladoIzquierdoJPanel.add(seleccionNavieraJLabel, constraintsSeleccionNavieraJLabel);
         ladoIzquierdoJPanel.add(listaNavierasComboBox, constraintsListaNavierasComboBox);
+        ladoIzquierdoJPanel.add(numeroDeContenedoresJLabel, constraintsNumeroDeContenedoresJLabel);
         ladoIzquierdoJPanel.add(numeroDeContenedoresJFormattedTextField, constraintsAddContenedoresJFormattedTextField);
-        ladoIzquierdoJPanel.add(botonAddContenedores, constraintsBotonAddContenedores);
+        ladoIzquierdoJPanel.add(botonAddContenedoresJButton, constraintsBotonAddContenedoresJButton);
+        ladoIzquierdoJPanel.add(inputNombreArchivoRegistroJLabel, constraintsInputNombreArchivoRegistroJLabel);
+        ladoIzquierdoJPanel.add(nombreDeArchivoGeneradoJTextField, constraintsNombreDeArchivoGeneradoJTextField);
+        ladoIzquierdoJPanel.add(botonGenerarArchivoJButton, constraintsBotonGenerarArchivoJButton);
 
         ladoIzquierdoInternoJPanel.add(ladoIzquierdoJPanel, BorderLayout.CENTER);
 
@@ -520,7 +598,7 @@ public class GUI extends JFrame {
         this.add(ladoCentroInternoJPanel, BorderLayout.CENTER);
 
         // Para no cambiar el tamaño (me rompe la posición de los componentes :) ).
-        this.setResizable(true);
+        this.setResizable(false);
 
         // Para que al comenzar la aplicación, el JFrame principal
         // aparezca en el centro de la pantalla. Sin esto, aparecería
