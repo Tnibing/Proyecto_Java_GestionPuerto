@@ -9,7 +9,7 @@ import java.util.List;
  * @author Fran <6W>
  */
 
-public class Puerto {
+public class Puerto implements Comparable<Puerto> {
     
     private final String nombrePuerto;
     private final String paisPuerto;
@@ -62,5 +62,10 @@ public class Puerto {
         String res = "Nombre del puerto: " + getNombre() + "\nPaís: " + getPais() +  "\nNombre de carga: " + getNombreDeCarga() + "\n";
         
         return res;
+    }
+
+    @Override
+    public int compareTo(Puerto o) {
+        return this.getNombre().compareToIgnoreCase(o.getNombre());
     }
 }

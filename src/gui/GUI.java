@@ -19,6 +19,7 @@ import javax.swing.JComboBox;
 import javax.swing.JFormattedTextField;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
@@ -63,7 +64,7 @@ public class GUI extends JFrame {
     // Inserción de texto y formateo PANEL IZQUIERDO
     private JFormattedTextField numeroDeContenedoresJFormattedTextField;
     private NumberFormatter formateadorJFormattedTextField;
-
+    
     // Posicionamiento de componentes (Constraints) PANEL IZQUIERDO.
     private GridBagConstraints constrainsListaPuertosOrigenComboBox;
     private GridBagConstraints constrainsListaPuertosDestinoComboBox;
@@ -78,7 +79,7 @@ public class GUI extends JFrame {
     private JLabel seleccionPuertoOrigenJLabel;
     private JLabel seleccionPuertoDestinoJLabel;
     private JLabel seleccionNavieraJLabel;
-
+    
     // PANEL CENTRO
     
     // Botones "click" PANEL CENTRO.
