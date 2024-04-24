@@ -28,6 +28,8 @@ public class EventoMostrarInfoPuertos implements ActionListener {
             texto.append(p.toString() + "\n");
         }
         
+        texto.append(String.format("%s\n\n", "-".repeat(100)));
+        
         texto.setCaretPosition(texto.getDocument().getLength());
         
     }

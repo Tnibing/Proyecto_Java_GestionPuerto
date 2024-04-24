@@ -168,7 +168,7 @@ public class EventoBotonComenzarPararRuta implements ActionListener {
             // Fin descarga contenedores
 
             // Carga contenedores
-            // Lista de copia por que si no me sale un error de concurrencia al modificar una colección mientras la estoy iterando en otro proceso
+            // Lista de copia por que si no me sale un error de concurrencia al modificar una colección mientras la estoy iterando en otro proceso (modificación concurrente)
             List<Contenedor> contenedores = new ArrayList<>(List.copyOf(b.getPuertoActual().getContenedores()));
             
             //Aquí se guardan los contenedores que se cargan al buque y hay que eliminar del puerto
