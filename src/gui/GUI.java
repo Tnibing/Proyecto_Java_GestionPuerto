@@ -1,6 +1,7 @@
 package gui;
 
 import agentes.Buque;
+import controladoresEventos.EventoBotonAddContenedor;
 import controladoresEventos.EventoBotonComenzarPararRuta;
 import controladoresEventos.EventoBotonLimpiarPantalla;
 import controladoresEventos.EventoMostrarInfoPuertos;
@@ -15,11 +16,13 @@ import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
+import javax.swing.JFormattedTextField;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
+import javax.swing.text.NumberFormatter;
 import rutas.Puerto;
 import rutas.Ruta;
 
@@ -30,7 +33,9 @@ import rutas.Ruta;
 
 public class GUI extends JFrame {
     
-    // Datos que maneja la interfaz gráfica
+    // Datos que maneja la interfaz gráfica.
+    // Los guardo aquí y le paso la referencia a los controladores
+    // para que los cambios se hagan sobre las mismas instancias
     private Puerto p1 = new Puerto("Valencia", "España");
     private Puerto p2 = new Puerto("Castellón", "España");
     private Puerto p3 = new Puerto("Barcelona", "España");
@@ -51,6 +56,13 @@ public class GUI extends JFrame {
     private JComboBox listaNavierasComboBox;
     private JComboBox listaPuertosOrigenComboBox;
     private JComboBox listaPuertosDestinoComboBox;
+    
+    //Botones PANEL IZQUIERDO
+    private JButton botonAddContenedores;
+    
+    // Inserción de texto y formateo PANEL IZQUIERDO
+    private JFormattedTextField numeroDeContenedoresJFormattedTextField;
+    private NumberFormatter formateadorJFormattedTextField;
 
     // Posicionamiento de componentes (Constraints) PANEL IZQUIERDO.
     private GridBagConstraints constrainsListaPuertosOrigenComboBox;
@@ -59,6 +71,8 @@ public class GUI extends JFrame {
     private GridBagConstraints constraintsSeleccionNavieraJLabel;
     private GridBagConstraints constraintsListaNavierasComboBox;
     private GridBagConstraints constraintsSeleccionPuertoDestinoJLabel;
+    private GridBagConstraints constraintsAddContenedoresJFormattedTextField;
+    private GridBagConstraints constraintsBotonAddContenedores;
 
     // Texto PANEL IZQUIERDO.
     private JLabel seleccionPuertoOrigenJLabel;
@@ -157,11 +171,11 @@ public class GUI extends JFrame {
         listaNavierasComboBox.setPreferredSize(new Dimension(139, 25));
 
         // (JComboBox)
-        String[] puertosOrigen = {"Valencia (España)", "Castellón (España)", "Barcelona (España)", "Pireo (Grecia)", "Estambul (Turquía)", "Yarimca (Turquía)"};
+        String[] puertosOrigen = {"Valencia España", "Castellón España", "Barcelona España", "Pireo Grecia", "Estambul Turquía", "Yarimca Turquía"};
         listaPuertosOrigenComboBox = new JComboBox(puertosOrigen);
 
         // (JComboBox)
-        String[] puertosDestino = {"Valencia (España)", "Castellón (España)", "Barcelona (España)", "Pireo (Grecia)", "Estambul (Turquía)", "Yarimca (Turquía)"};
+        String[] puertosDestino = {"Valencia España", "Castellón España", "Barcelona España", "Pireo Grecia", "Estambul Turquía", "Yarimca Turquía"};
         listaPuertosDestinoComboBox = new JComboBox(puertosDestino);
 
         // (JLabel)
@@ -179,6 +193,22 @@ public class GUI extends JFrame {
         seleccionNavieraJLabel.setText("Naviera:");
         seleccionNavieraJLabel.setForeground(Color.WHITE);
 
+        // Formateo para que solo acepte enteros el JFormattedTextField
+        formateadorJFormattedTextField = new NumberFormatter();
+        formateadorJFormattedTextField.setValueClass(Integer.class);
+        formateadorJFormattedTextField.setMinimum(0);
+        formateadorJFormattedTextField.setAllowsInvalid(false);
+        
+        // (JFormattedTextField) para la selección del número de contenedores que añadir
+        numeroDeContenedoresJFormattedTextField = new JFormattedTextField(formateadorJFormattedTextField);
+        numeroDeContenedoresJFormattedTextField.setPreferredSize(listaNavierasComboBox.getPreferredSize());
+        
+        // (JButton) botón para añadir contenedores
+        botonAddContenedores = new JButton("Añadir contenedores");
+        botonAddContenedores.addActionListener(new EventoBotonAddContenedor(listaPuertosOrigenComboBox, listaPuertosDestinoComboBox, 
+                                                                                                                                           listaNavierasComboBox, numeroDeContenedoresJFormattedTextField, 
+                                                                                                                                           p1, p2, p3, p4, p5, p6));
+        
         // En los constraints, gridx = 0 -> primera columna, gridy modifica la fila.
         // Los componentes se colocan todos en la misma columna pero diferente fila.
         // weighty -> valor mayor, prioridad, ocupa el espacio disponible. Añado el weighty = 1 al último
@@ -194,7 +224,7 @@ public class GUI extends JFrame {
         constraintsSeleccionPuertoOrigenJLabel.anchor = GridBagConstraints.NORTH;
         constraintsSeleccionPuertoOrigenJLabel.insets = new Insets(5, 5, 5, 5);
         constraintsSeleccionPuertoOrigenJLabel.weighty = 0;
-
+        
         // Lista de puertos (JComboBox Constraint).
         constrainsListaPuertosOrigenComboBox = new GridBagConstraints();
         constrainsListaPuertosOrigenComboBox.gridx = 0;
@@ -243,7 +273,29 @@ public class GUI extends JFrame {
         constraintsListaNavierasComboBox.gridheight = 1;
         constraintsListaNavierasComboBox.anchor = GridBagConstraints.NORTH;
         constraintsListaNavierasComboBox.insets = new Insets(5, 5, 5, 5);
-        constraintsListaNavierasComboBox.weighty = 1;
+        constraintsListaNavierasComboBox.weighty = 0;
+
+        // Área de texto para el número de contenedores (JFormattedTextField Constraint)
+        constraintsAddContenedoresJFormattedTextField = new GridBagConstraints();
+        constraintsAddContenedoresJFormattedTextField = new GridBagConstraints();
+        constraintsAddContenedoresJFormattedTextField.gridx = 0;
+        constraintsAddContenedoresJFormattedTextField.gridy = 6;
+        constraintsAddContenedoresJFormattedTextField.gridwidth = 1;
+        constraintsAddContenedoresJFormattedTextField.gridheight = 1;
+        constraintsAddContenedoresJFormattedTextField.anchor = GridBagConstraints.NORTH;
+        constraintsAddContenedoresJFormattedTextField.insets = new Insets(5, 5, 5, 5);
+        constraintsAddContenedoresJFormattedTextField.weighty = 0;
+
+        // Botón para añadir contenedores (JButton Constraint)
+        constraintsBotonAddContenedores = new GridBagConstraints();
+        constraintsBotonAddContenedores = new GridBagConstraints();
+        constraintsBotonAddContenedores.gridx = 0;
+        constraintsBotonAddContenedores.gridy = 7;
+        constraintsBotonAddContenedores.gridwidth = 1;
+        constraintsBotonAddContenedores.gridheight = 1;
+        constraintsBotonAddContenedores.anchor = GridBagConstraints.NORTH;
+        constraintsBotonAddContenedores.insets = new Insets(5, 5, 5, 5);
+        constraintsBotonAddContenedores.weighty = 1;
 
         // Adición de componentes al panel izquierdo (los componentes que le correspondan
         // con sus respectivos constraints).
@@ -255,6 +307,8 @@ public class GUI extends JFrame {
         ladoIzquierdoJPanel.add(listaPuertosDestinoComboBox, constrainsListaPuertosDestinoComboBox);
         ladoIzquierdoJPanel.add(seleccionNavieraJLabel, constraintsSeleccionNavieraJLabel);
         ladoIzquierdoJPanel.add(listaNavierasComboBox, constraintsListaNavierasComboBox);
+        ladoIzquierdoJPanel.add(numeroDeContenedoresJFormattedTextField, constraintsAddContenedoresJFormattedTextField);
+        ladoIzquierdoJPanel.add(botonAddContenedores, constraintsBotonAddContenedores);
 
         ladoIzquierdoInternoJPanel.add(ladoIzquierdoJPanel, BorderLayout.CENTER);
 
@@ -465,7 +519,7 @@ public class GUI extends JFrame {
         this.add(ladoCentroInternoJPanel, BorderLayout.CENTER);
 
         // Para no cambiar el tamaño (me rompe la posición de los componentes :) ).
-        this.setResizable(false);
+        this.setResizable(true);
 
         // Para que al comenzar la aplicación, el JFrame principal
         // aparezca en el centro de la pantalla. Sin esto, aparecería

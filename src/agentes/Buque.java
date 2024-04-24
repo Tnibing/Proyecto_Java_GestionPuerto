@@ -30,14 +30,14 @@ public class Buque {
             
             puertoInicial = new Puerto("Yarimca", "Turquía");
             
-            navi = new Naviera("ARKAS");
+            navi = new Naviera("Arkas");
         }
         
         else if (nombreBuque.equalsIgnoreCase("MAERSK NEWPORT")) {
             
             puertoInicial = new Puerto("Valencia", "España");
             
-            navi = new Naviera("MAERSK");
+            navi = new Naviera("Maersk");
 
         }
         
@@ -81,7 +81,6 @@ public class Buque {
         puertoInicial = p;
     }
     
-    // TO DO
     public void descargarContenedores(Contenedor  c) {
         contenedoresCargados.remove(c);
     }

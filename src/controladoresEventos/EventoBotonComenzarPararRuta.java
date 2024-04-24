@@ -64,12 +64,16 @@ public class EventoBotonComenzarPararRuta implements ActionListener {
 
                 // bucle del buque de Maersk
                 // usando lambda expression por practicar
-                HiloBuqueMaersk = new Thread(() -> {
+                HiloBuqueMaersk = new Thread(new Runnable() {
 
-                    enRuta = true;
-
-                    gestionBuques(maerskNP, 2600);
-
+                    @Override
+                    public void run() {
+                        
+                        enRuta = true;
+                        
+                        gestionBuques(maerskNP, 2600);
+                    
+                    }
                 });
 
                 // bucle del buque de CMA

@@ -41,4 +41,16 @@ public class Contenedor {
     public Puerto getDestino() {
         return puertoDestino;
     }
+    
+    public String getMatricula() {
+        return matricula;
+    }
+    
+    @Override
+    public String toString() {
+        
+        String res = "Naviera del contenedor: " + getNaviera().getNombre() + "\nPuero de origen: " + puertoOrigen.getNombre() + "\nPuerdo de destino: " + puertoDestino.getNombre() + "\nMatrícula del contenedor: " + getMatricula() + "\n";
+        
+        return res;
+    }
 }
