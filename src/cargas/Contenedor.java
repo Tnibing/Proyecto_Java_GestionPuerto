@@ -1,7 +1,7 @@
-package gestionCarga;
+package cargas;
 
 import agentes.Naviera;
-import gestionRuta.Puerto;
+import rutas.Puerto;
 
 /**
  *
@@ -12,17 +12,14 @@ public class Contenedor {
     
     private Naviera nav;
     private String matricula;
-    private String tamanyo;
-    private int pesoVacio;
-    private int pesoMax;
+    private Puerto puertoOrigen;
     private Puerto puertoDestino;
     
-    public Contenedor(Naviera nav, String t, Puerto destino) {
+    public Contenedor(Naviera nav, Puerto origen, Puerto destino) {
         this.nav = nav;
-        tamanyo = t;
+        puertoOrigen = origen;
         puertoDestino = destino;
         generarMatricula();
-        generarPesos();
     }
     
     private void generarMatricula() {
@@ -33,17 +30,15 @@ public class Contenedor {
         matricula = sb.toString();
     }
     
-    private void generarPesos() {
-        
-        if (tamanyo.equalsIgnoreCase("20 pies")) {
-            pesoVacio = 2200;
-            pesoMax = 28500;
-            
-        } else if (tamanyo.equalsIgnoreCase("40 pies")) {
-            pesoVacio = 3800;
-            pesoMax = 30000;
-        }
+    public Naviera getNaviera() {
+        return nav;
     }
     
+    public Puerto getOrigen() {
+        return puertoOrigen;
+    }
     
+    public Puerto getDestino() {
+        return puertoDestino;
+    }
 }

@@ -342,6 +342,8 @@ public class GUI extends JFrame {
         constraintsRutaBuquesJScrollPane.weightx = 1.0;
         constraintsRutaBuquesJScrollPane.anchor = GridBagConstraints.CENTER;
         constraintsRutaBuquesJScrollPane.insets = new Insets(5, 5, 5, 5);
+        constraintsRutaBuquesJScrollPane.weighty = 1.0;
+        constraintsRutaBuquesJScrollPane.weightx = 1.0;
 
         // Info puertos (JScrollPane Constraint)
         constraintsInfoTextoPuertosJScrollPane = new GridBagConstraints();

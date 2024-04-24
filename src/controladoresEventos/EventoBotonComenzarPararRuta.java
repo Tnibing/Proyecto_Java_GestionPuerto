@@ -1,11 +1,13 @@
 package controladoresEventos;
 
 import agentes.Buque;
-import gestionRuta.Puerto;
-import gestionRuta.Ruta;
+import cargas.Contenedor;
+import rutas.Puerto;
+import rutas.Ruta;
 import gui.GUI;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JTextArea;
@@ -14,7 +16,6 @@ import javax.swing.JTextArea;
  *
  * @author Fran <6W>
  */
-
 public class EventoBotonComenzarPararRuta implements ActionListener {
 
     // Datos
@@ -25,14 +26,12 @@ public class EventoBotonComenzarPararRuta implements ActionListener {
     private Puerto p5 = new Puerto("Estambul", "Turquía");
     private Puerto p6 = new Puerto("Yarimca", "Turquía");
 
-    private Ruta ruta1 = new Ruta("Ruta de comercio Mediterránea", p1, p2, p3, p4, p5, p6);
-    private Ruta ruta2 = new Ruta("Ruta de comercio Mediterránea", p1, p2, p3, p4, p5, p6);
-    private Ruta ruta3 = new Ruta("Ruta de comercio Mediterránea", p1, p2, p3, p4, p5, p6);
+    private Ruta ruta = new Ruta("Ruta de comercio Mediterránea", p1, p2, p3, p4, p5, p6);
 
-    private Buque cinzia = new Buque("CINZIA A", ruta1);
-    private Buque maerskNP = new Buque("MAERSK NEWPORT", ruta2);
-    private Buque bomar = new Buque("BOMAR RESOLVE", ruta3);
-    
+    private Buque cinzia = new Buque("CINZIA A", ruta);
+    private Buque maerskNP = new Buque("MAERSK NEWPORT", ruta);
+    private Buque bomar = new Buque("BOMAR RESOLVE", ruta);
+
     private JTextArea texto;
     private Boolean enRuta = false;
 
@@ -58,43 +57,20 @@ public class EventoBotonComenzarPararRuta implements ActionListener {
                 @Override
                 public void run() {
 
-                     enRuta = true;
+                    enRuta = true;
 
-                    texto.append("El buque " + cinzia.getNombre() + " de la naviera " + cinzia.getNombreNaviera() + " comienza la ruta en el puerto de " + cinzia.getPuertoActual().getNombre() + ".\n");
-                    
-                    while (enRuta) {
+                    gestionBuques(cinzia, 1000);
 
-                        try {
-                            Thread.sleep(1000);
-                        } catch (InterruptedException ex) {
-                            Logger.getLogger(GUI.class.getName()).log(Level.SEVERE, null, ex);
-                        }
-                        
-                        texto.append("Soy el buque de ARKAS\n");
-                        
-                    }
                 }
             });
 
-            
             // bucle del buque de Maersk
             HiloBuqueMaersk = new Thread(() -> {
-                
-                 enRuta = true;
-                
-                texto.append("El buque " + maerskNP.getNombre() + " de la naviera " + maerskNP.getNombreNaviera() + " comienza la ruta en el puerto de " + maerskNP.getPuertoActual().getNombre() + ".\n");
-                
-                while (enRuta) {
-                    
-                    try {
-                        Thread.sleep(1500);
-                    } catch (InterruptedException ex) {
-                        Logger.getLogger(GUI.class.getName()).log(Level.SEVERE, null, ex);
-                    }
-                    
-                    texto.append("Soy el buque de MAERSK\n");
-                    
-                }
+
+                enRuta = true;
+
+                gestionBuques(maerskNP, 2600);
+
             });
 
             // bucle del buque de CMA
@@ -102,36 +78,25 @@ public class EventoBotonComenzarPararRuta implements ActionListener {
 
                 @Override
                 public void run() {
-                    
-                     enRuta = true;
 
-                    texto.append("El buque " + bomar.getNombre() + " de la naviera " + bomar.getNombreNaviera() + " comienza la ruta en el puerto de " + bomar.getPuertoActual().getNombre() + ".\n");
-                    
-                    while (enRuta) {
+                    enRuta = true;
 
-                        try {
-                            Thread.sleep(2000);
-                        } catch (InterruptedException ex) {
-                            Logger.getLogger(GUI.class.getName()).log(Level.SEVERE, null, ex);
-                        }
-                        
-                        texto.append("Soy el buque de CMA\n");
+                    gestionBuques(bomar, 5300);
 
-                    }
                 }
             });
-            
+
             // Se inician los 3 hilos
             HiloBuqueArkas.start();
             HiloBuqueMaersk.start();
             HiloBuqueCMA.start();
 
         } else {
-            
-            // Si los buques ya están de ruta, boolean a false
+
+            // Si los buques ya están de ruta, boolean a false para que paren
             enRuta = false;
-            
-            // Se espera a que todos acaben la ejecución de la iteración actual
+
+            // Se espera a que todos los hilos acaben la ejecución de la iteración actual
             try {
                 HiloBuqueArkas.join();
                 HiloBuqueMaersk.join();
@@ -139,10 +104,69 @@ public class EventoBotonComenzarPararRuta implements ActionListener {
             } catch (InterruptedException ex) {
                 Logger.getLogger(EventoBotonComenzarPararRuta.class.getName()).log(Level.SEVERE, null, ex);
             }
-            
-            // Se informa de que ha ruta ha sido detenida
-            texto.append("Ruta DETENIDA...\n");
 
+            // Se informa en la interfaz gráfica de que ha ruta ha sido detenida
+            texto.append("\nRuta DETENIDA...\n");
+        }
+    }
+
+    private void gestionBuques(Buque b, int esperar) {
+
+        texto.append("El buque " + b.getNombre() + " de la naviera " + b.getNombreNaviera() + " comienza la ruta en el puerto de " + b.getPuertoActual().getNombre() + ".\n");
+
+        while (enRuta) {
+
+            try {
+                Thread.sleep(esperar);
+            } catch (InterruptedException ex) {
+                Logger.getLogger(GUI.class.getName()).log(Level.SEVERE, null, ex);
+            }
+
+            // Descarga de contenedores
+            List<Contenedor> contenedoresBuque = b.getContenedores();
+
+            int contenedoresDescargados = 0;
+
+            for (Contenedor c : contenedoresBuque) {
+
+                if (c.getDestino() == b.getPuertoActual()) {
+
+                    b.getPuertoActual().addContenedores(c);
+                    b.descargarContenedores(c);
+                    contenedoresDescargados++;
+                }
+
+            }
+
+            texto.append("\nEl buque " + b.getNombre() + " ha DESCARGADO " + contenedoresDescargados + " contenedores en el puerto de " + b.getPuertoActual().getNombre() + ".\n");
+            // Fin descarga contenedores
+
+            // Carga contenedores
+            List<Contenedor> contenedores = b.getPuertoActual().getContenedores();
+
+            for (Contenedor c : contenedores) {
+
+                if (c.getNaviera().getNombre().equals(b.getNombreNaviera()) && b.getContenedores().size() < b.getCapacidad()) {
+                    b.addContenedor(c);
+                    b.getPuertoActual().cargarContenedores(c);
+                }
+
+            }
+
+            int puertoActual = b.getRuta().getPuertos().indexOf(b.getPuertoActual());
+            int puertoDestino;
+
+            if (puertoActual < b.getRuta().getPuertos().size() - 1) {
+                puertoDestino = puertoActual + 1;
+            } else {
+                puertoDestino = 0;
+            }
+
+            texto.append("El buque " + b.getNombre() + " ha CARGADO " + b.getContenedores().size() + " contenedores en el puerto de " + b.getPuertoActual().getNombre() + ".\n"
+                    + "Siguiente destino:\n" + b.getRuta().getPuertos().get(puertoDestino).toString() + "\n");
+
+            cinzia.setPuertoActual(b.getRuta().getPuertos().get(puertoDestino));
+            // Fin carga contenedores
         }
     }
 }

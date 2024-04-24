@@ -1,13 +1,11 @@
 package agentes;
 
 import agentes.Naviera;
-import gestionCarga.Contenedor;
-import gestionRuta.Puerto;
-import gestionRuta.Ruta;
+import cargas.Contenedor;
+import rutas.Puerto;
+import rutas.Ruta;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 /**
  *
@@ -72,56 +70,21 @@ public class Buque {
         return navi.toString();
     }
     
-    // El spread operator en el parámetro devuelve un array del mismo tipo (Contenedor[])
-    // de n número de elementos
-    public void addContenedor(Contenedor ... c) {
-        
-        for (Contenedor conte : c) {
-            
-            if(contenedoresCargados.size() < capacidadContenedores)
-                contenedoresCargados.add(conte);
-            
-        }
-        
-    }
-    
     public Puerto getPuertoActual() {
         return puertoInicial;
     }
     
-    public void llegarAPuerto(Puerto p) {
-        System.out.println("El buque " + getNombre() + " está llegando al puerto " + p.getNombre() + "...");
-        p.pedirAtracar(this);
-        
-        try {
-            Thread.sleep(2000);
-            
-            System.out.println("El buque " + getNombre() + " acaba de atracar.");
-            
-            System.out.println("Amarrando...");
-            
-            Thread.sleep(3000);
-            
-        } catch (InterruptedException ex) {
-            Logger.getLogger(Buque.class.getName()).log(Level.SEVERE, null, ex);
-            
-        } finally {
-            System.out.println("Buque " + getNombre() + " asegurado, listo para carga/descarga de contenedores.");
-            
-            puertoInicial = p;
-            
-            System.out.println("Puerto actual: " + puertoInicial.getNombre());
-        }
+    public void addContenedor(Contenedor c) {
+        contenedoresCargados.add(c);
+    }
+    
+    public void setPuertoActual(Puerto p) {
+        puertoInicial = p;
     }
     
     // TO DO
-    public void descargarContenedores(Contenedor ... c) {
-        
-    }
-
-    // TO DO
-    public void cargarContenedores(Contenedor ... c) {
-        
+    public void descargarContenedores(Contenedor  c) {
+        contenedoresCargados.remove(c);
     }
     
     @Override
