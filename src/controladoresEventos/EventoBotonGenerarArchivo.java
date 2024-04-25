@@ -38,8 +38,6 @@ public class EventoBotonGenerarArchivo implements ActionListener {
         String nombreArchivo = nombreArchivoUsuario.getText();
         String infoBuquesTexto = infoBuques.getText();
 
-        System.out.println("Texto de buques" + infoBuquesTexto);
-
         if (nombreArchivo.isEmpty() || infoBuquesTexto.isEmpty()) {
             JOptionPane.showMessageDialog(null, "¡Necesitas escribir un nombre para el archivo y que existan datos sobre las rutas!", "Error", JOptionPane.ERROR_MESSAGE);
 
