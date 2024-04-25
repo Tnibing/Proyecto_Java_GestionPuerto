@@ -64,10 +64,10 @@ public class EventoBotonComenzarPararRuta implements ActionListener {
                     }
                 });
                 
+                // Para identificar el hilo en errores de consola
                 HiloBuqueArkas.setName("Hilo buque arkas");
 
                 // bucle del buque de Maersk
-                // usando lambda expression por practicar
                 HiloBuqueMaersk = new Thread(new Runnable() {
 
                     @Override
@@ -80,6 +80,7 @@ public class EventoBotonComenzarPararRuta implements ActionListener {
                     }
                 });
                 
+                // Para identificar el hilo en errores de consola
                 HiloBuqueMaersk.setName("Hilo buque maersk");
 
                 // bucle del buque de CMA
@@ -95,6 +96,7 @@ public class EventoBotonComenzarPararRuta implements ActionListener {
                     }
                 });
                 
+                // Para identificar el hilo en errores de consola
                 HiloBuqueCMA.setName("Hilo buque cma");
 
                 // Se inician los 3 hilos
@@ -125,6 +127,7 @@ public class EventoBotonComenzarPararRuta implements ActionListener {
 
         });
 
+        // Para identificar el hilo en errores de consola
         HiloGeneralBuques.setName("Hilo general gestión buques");
         HiloGeneralBuques.start();
     }

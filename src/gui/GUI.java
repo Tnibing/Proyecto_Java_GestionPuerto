@@ -3,6 +3,7 @@ package gui;
 import agentes.Buque;
 import controladoresEventos.EventoBotonAddContenedor;
 import controladoresEventos.EventoBotonComenzarPararRuta;
+import controladoresEventos.EventoBotonGenerarArchivo;
 import controladoresEventos.EventoBotonLimpiarPantalla;
 import controladoresEventos.EventoMostrarInfoPuertos;
 import java.awt.BorderLayout;
@@ -243,6 +244,7 @@ public class GUI extends JFrame {
         // (JButton) botón para generar archivo
         botonGenerarArchivoJButton = new JButton("Generar bitácora");
         botonGenerarArchivoJButton.setPreferredSize(botonAddContenedoresJButton.getPreferredSize());
+
 
         // Imagen, primero se carga como ImageIcon y luego lo paso a
         // Image para poder cambiar el tamaño
@@ -507,6 +509,10 @@ public class GUI extends JFrame {
 
         // Otro JLabel para la otra imagen (puerto)
         contenedorImagenCentroPuertoJLabel = new JLabel(puertoImgFinal);
+        
+        // Como este escuchador necesita un componente que se crea después del boton de generar archivo
+        // lo pongo aquí para que tenga acceso a ese botón
+        botonGenerarArchivoJButton.addActionListener(new EventoBotonGenerarArchivo(nombreDeArchivoGeneradoJTextField, rutaBuquesJTextArea));
 
         // CONSTRAINTS COMPONENTES PANEL CENTRO 
         // Ruta buques (JScrollPanel Constraint)
