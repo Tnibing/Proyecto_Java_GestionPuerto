@@ -52,7 +52,7 @@ public class EventoBotonGenerarArchivo implements ActionListener {
                 bw = new BufferedWriter(new FileWriter(archivoFinal));
                 bw.write(infoBuquesTexto);
 
-                JOptionPane.showMessageDialog(null, "Se ha escrito el archivo " + nombreArchivo + " en la siguiente ruta:\n" + archivoFinal.getAbsolutePath(), "Confirmado", JOptionPane.INFORMATION_MESSAGE);
+                JOptionPane.showMessageDialog(null, "Se ha escrito el archivo \"" + nombreArchivo + "\" en la siguiente ruta:\n" + archivoFinal.getAbsolutePath(), "Confirmado", JOptionPane.INFORMATION_MESSAGE);
 
             } catch (IOException ioe) {
                 JOptionPane.showMessageDialog(null, "¡Error al escribir en el archivo!", "Error", JOptionPane.ERROR_MESSAGE);
