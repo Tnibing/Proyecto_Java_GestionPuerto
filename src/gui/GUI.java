@@ -225,6 +225,7 @@ public class GUI extends JFrame {
         formateadorJFormattedTextField = new NumberFormatter();
         formateadorJFormattedTextField.setValueClass(Integer.class);
         formateadorJFormattedTextField.setMinimum(0);
+        formateadorJFormattedTextField.setMaximum(1000000);
         formateadorJFormattedTextField.setAllowsInvalid(false);
 
         // (JFormattedTextField) para la selección del número de contenedores que añadir
