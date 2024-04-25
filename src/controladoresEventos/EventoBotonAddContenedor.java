@@ -61,7 +61,7 @@ public class EventoBotonAddContenedor implements ActionListener {
         Thread hiloAddContenedores = new Thread(() -> {
 
             nav = new Naviera((String) naviera.getSelectedItem());
-
+            
             numContenedores = numContenedoresParsearEsto.getValue() == null ? 0 : (Integer) numContenedoresParsearEsto.getValue();
 
             String seleccionPuertoOrigen = (String) puertoO.getSelectedItem();
@@ -132,7 +132,7 @@ public class EventoBotonAddContenedor implements ActionListener {
 
                 } catch (PuertosOrigenYDestinoIgualesException ex) {
 
-                    JOptionPane.showMessageDialog(null, "¡Los puertos de origen y destino no pueden ser el mismo!", "Error", JOptionPane.ERROR_MESSAGE);
+                    JOptionPane.showMessageDialog(null, ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
                 }
             }
         });

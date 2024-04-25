@@ -91,6 +91,9 @@ public class GUI extends JFrame {
     private JLabel numeroDeContenedoresJLabel;
     private JLabel inputNombreArchivoRegistroJLabel;
     
+    // JLabel para imágenes PANEL IZQUIERDO
+    private JLabel contenedorImagenIzquierdaLogoJLabel;
+    
     // PANEL CENTRO
     
     // Botones "click" PANEL CENTRO.
@@ -118,6 +121,7 @@ public class GUI extends JFrame {
     private GridBagConstraints constraintsInfoPuertosJButton;
     private GridBagConstraints constraintsInfoTextoPuertosJScrollPane;
     private GridBagConstraints constraintsLimpiarPantallaInfoPuertosJButton;
+    private GridBagConstraints constraintsContenedorImagenIzquierdaLogoJLabel;
 
     // PANELES.
     private JPanel ladoIzquierdoInternoJPanel;
@@ -179,15 +183,17 @@ public class GUI extends JFrame {
         String[] navieras = {"Arkas", "Maersk", "CMA"};
         listaNavierasComboBox = new JComboBox(navieras);
         // Cambio del tamaño manual para igualarlo a las listas desplegables.
-        listaNavierasComboBox.setPreferredSize(new Dimension(139, 25));
+        listaNavierasComboBox.setPreferredSize(new Dimension(156, 26));
 
         // (JComboBox)
         String[] puertosOrigen = {"Valencia España", "Castellón España", "Barcelona España", "Pireo Grecia", "Estambul Turquía", "Yarimca Turquía"};
         listaPuertosOrigenComboBox = new JComboBox(puertosOrigen);
+        listaPuertosOrigenComboBox.setPreferredSize(new Dimension(156, 26));
 
         // (JComboBox)
         String[] puertosDestino = {"Valencia España", "Castellón España", "Barcelona España", "Pireo Grecia", "Estambul Turquía", "Yarimca Turquía"};
         listaPuertosDestinoComboBox = new JComboBox(puertosDestino);
+        listaPuertosDestinoComboBox.setPreferredSize(new Dimension(156, 26));
 
         // (JLabel)
         seleccionPuertoOrigenJLabel = new JLabel();
@@ -219,24 +225,33 @@ public class GUI extends JFrame {
         formateadorJFormattedTextField.setValueClass(Integer.class);
         formateadorJFormattedTextField.setMinimum(0);
         formateadorJFormattedTextField.setAllowsInvalid(false);
+
+        // (JFormattedTextField) para la selección del número de contenedores que añadir
+        numeroDeContenedoresJFormattedTextField = new JFormattedTextField(formateadorJFormattedTextField);
+        numeroDeContenedoresJFormattedTextField.setPreferredSize(new Dimension(156, 26));
         
         // (JButton) botón para añadir contenedores
-        botonAddContenedoresJButton = new JButton("Añadir contenedores");
+        botonAddContenedoresJButton = new JButton("Añadir contenedor/es");
         botonAddContenedoresJButton.addActionListener(new EventoBotonAddContenedor(listaPuertosOrigenComboBox, listaPuertosDestinoComboBox, 
                                                                                                                                            listaNavierasComboBox, numeroDeContenedoresJFormattedTextField, 
                                                                                                                                            p1, p2, p3, p4, p5, p6));
 
-        // (JFormattedTextField) para la selección del número de contenedores que añadir
-        numeroDeContenedoresJFormattedTextField = new JFormattedTextField(formateadorJFormattedTextField);
-        numeroDeContenedoresJFormattedTextField.setPreferredSize(botonAddContenedoresJButton.getPreferredSize());
-        
         // (JTextField) inserción del nombre del archivo que se va a generar
         nombreDeArchivoGeneradoJTextField = new JTextField();
         nombreDeArchivoGeneradoJTextField.setPreferredSize(botonAddContenedoresJButton.getPreferredSize());
         
         // (JButton) botón para generar archivo
-        botonGenerarArchivoJButton = new JButton("Generar vitácora");
+        botonGenerarArchivoJButton = new JButton("Generar bitácora");
         botonGenerarArchivoJButton.setPreferredSize(botonAddContenedoresJButton.getPreferredSize());
+
+        // Imagen, primero se carga como ImageIcon y luego lo paso a
+        // Image para poder cambiar el tamaño
+        ImageIcon iconoApp = new ImageIcon("logoAPP4.png");
+        Image iconoAppOriginal = iconoApp.getImage();
+        Image iconoAppImgEscalada = iconoAppOriginal.getScaledInstance(70, 80, Image.SCALE_SMOOTH);
+        ImageIcon iconoAppFinal = new ImageIcon(iconoAppImgEscalada);
+        
+        contenedorImagenIzquierdaLogoJLabel = new JLabel(iconoAppFinal);
         
         // En los constraints, gridx = 0 -> primera columna, gridy modifica la fila.
         // Los componentes se colocan todos en la misma columna pero diferente fila.
@@ -293,7 +308,7 @@ public class GUI extends JFrame {
         constraintsSeleccionNavieraJLabel.gridwidth = 1;
         constraintsSeleccionNavieraJLabel.gridheight = 1;
         constraintsSeleccionNavieraJLabel.anchor = GridBagConstraints.NORTH;
-        constraintsSeleccionNavieraJLabel.insets = new Insets(50, 5, 5, 5);
+        constraintsSeleccionNavieraJLabel.insets = new Insets(25, 5, 5, 5);
         constraintsSeleccionNavieraJLabel.weighty = 0;
 
         // Lista de navieras (JComboBox Constraint).
@@ -370,7 +385,19 @@ public class GUI extends JFrame {
         constraintsBotonGenerarArchivoJButton.gridheight = 1;
         constraintsBotonGenerarArchivoJButton.anchor = GridBagConstraints.NORTH;
         constraintsBotonGenerarArchivoJButton.insets = new Insets(5, 5, 5, 5);
-        constraintsBotonGenerarArchivoJButton.weighty = 1;
+        constraintsBotonGenerarArchivoJButton.weighty = 0;
+        
+        // Constraints del contenedor de la imagen del logo (JLabel Constraints)
+        constraintsContenedorImagenIzquierdaLogoJLabel = new GridBagConstraints();
+        constraintsContenedorImagenIzquierdaLogoJLabel = new GridBagConstraints();
+        constraintsContenedorImagenIzquierdaLogoJLabel.gridx = 0;
+        constraintsContenedorImagenIzquierdaLogoJLabel.gridy = 12;
+        constraintsContenedorImagenIzquierdaLogoJLabel.gridwidth = 1;
+        constraintsContenedorImagenIzquierdaLogoJLabel.gridheight = 1;
+        constraintsContenedorImagenIzquierdaLogoJLabel.anchor = GridBagConstraints.NORTH;
+        constraintsContenedorImagenIzquierdaLogoJLabel.insets = new Insets(35, 5, 5, 5);
+        constraintsContenedorImagenIzquierdaLogoJLabel.weighty = 1;
+                
 
         // Adición de componentes al panel izquierdo (los componentes que le correspondan
         // con sus respectivos constraints).
@@ -388,6 +415,7 @@ public class GUI extends JFrame {
         ladoIzquierdoJPanel.add(inputNombreArchivoRegistroJLabel, constraintsInputNombreArchivoRegistroJLabel);
         ladoIzquierdoJPanel.add(nombreDeArchivoGeneradoJTextField, constraintsNombreDeArchivoGeneradoJTextField);
         ladoIzquierdoJPanel.add(botonGenerarArchivoJButton, constraintsBotonGenerarArchivoJButton);
+        ladoIzquierdoJPanel.add(contenedorImagenIzquierdaLogoJLabel, constraintsContenedorImagenIzquierdaLogoJLabel);
 
         ladoIzquierdoInternoJPanel.add(ladoIzquierdoJPanel, BorderLayout.CENTER);
 
