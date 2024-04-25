@@ -638,7 +638,7 @@ public class GUI extends JFrame {
         // aparezca en el centro de la pantalla. Sin esto, aparecería
         // arriba a la izquierda.
         this.setLocationRelativeTo(null);
-
+        
         // Sin esto, no se vería el JFrame al iniciar la aplicación.
         this.setVisible(true);
     }

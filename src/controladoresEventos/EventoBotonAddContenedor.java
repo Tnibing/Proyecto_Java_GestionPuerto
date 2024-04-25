@@ -31,6 +31,7 @@ public class EventoBotonAddContenedor implements ActionListener {
 
     private Contenedor contenedor;
 
+    private int numContenedoresAnyadidos;
     private int numContenedores;
     private JFormattedTextField numContenedoresParsearEsto;
 
@@ -111,6 +112,8 @@ public class EventoBotonAddContenedor implements ActionListener {
                 case "Yarimca" ->
                     contenedorPuertoDestino = pYarimca;
             }
+            
+            numContenedoresAnyadidos = numContenedores;
 
             if (numContenedores == 0) {
                 JOptionPane.showMessageDialog(null, "¡No puedes añadir 0 contenedores!", "Error", JOptionPane.ERROR_MESSAGE);
@@ -123,7 +126,7 @@ public class EventoBotonAddContenedor implements ActionListener {
                     numContenedores--;
                 }
 
-                JOptionPane.showMessageDialog(null, contenedorPuertoOrigen.getContenedores().size() + " contenedores añadidos.\nOrigen:\n" + contenedorPuertoOrigen.infoPuerto() + "\nDestino:\n" + contenedorPuertoDestino.infoPuerto(), "Confirmado", JOptionPane.INFORMATION_MESSAGE);
+                JOptionPane.showMessageDialog(null, numContenedoresAnyadidos + " contenedores añadidos.\nOrigen:\n" + contenedorPuertoOrigen.infoPuerto() + "\nDestino:\n" + contenedorPuertoDestino.infoPuerto(), "Confirmado", JOptionPane.INFORMATION_MESSAGE);
 
             } else {
 
